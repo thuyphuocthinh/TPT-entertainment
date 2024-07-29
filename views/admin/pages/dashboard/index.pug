@@ -1,0 +1,9 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/search.pug 
+include ../../mixins/changeMulti.pug 
+include ../../mixins/status.pug 
+
+block main
+    .container 
+        +box-head(pageTitle)

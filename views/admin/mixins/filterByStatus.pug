@@ -1,0 +1,14 @@
+mixin filterByStatus(options, defaultValue)
+    .d-flex.align-items-center.justify-content-end.gap-4(
+        style="height: 100%;"
+    )
+        each option in options 
+            .form-check.form-check-inline.mb-0
+                input.form-check-input(
+                    type='radio' 
+                    id=option.title 
+                    name="status" 
+                    value=option.value
+                    checked=(option.value===defaultValue?true:false)
+                )
+                label.form-check-label(for=option.title) #{option.title}

@@ -1,9 +1,13 @@
 import { Express } from "express";
+import { systemConfig } from "./config/system.config";
+import * as database from "./config/database.config";
 import express from "express";
 import dotenv from "dotenv";
 import bodyparser from "body-parser";
-import * as database from "./config/database.config";
-import { systemConfig } from "./config/system.config";
+import flash from "express-flash";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import adminRoutes from "./routes/admin/index.route";
 
 const app: Express = express();
 
@@ -14,7 +18,12 @@ dotenv.config();
 database.connect();
 
 // public files
-app.use(express.static("/public"));
+app.use(express.static("public"));
+
+// flash
+app.use(cookieParser("TPT"));
+app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(flash());
 
 // body-parser
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -27,6 +36,9 @@ app.set("view engine", "pug");
 
 // app locals
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+
+// routes
+adminRoutes(app);
 
 // port
 const port: number | string = process.env.PORT;
