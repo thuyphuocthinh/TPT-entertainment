@@ -8,6 +8,7 @@ import flash from "express-flash";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import methodOverride from "method-override";
+import path from "path";
 import adminRoutes from "./routes/admin/index.route";
 
 const app: Express = express();
@@ -37,6 +38,10 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 
 // tinymce
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce"))
+);
 
 // app locals
 app.locals.prefixAdmin = systemConfig.prefixAdmin;

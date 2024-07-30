@@ -7,6 +7,7 @@ include ../../mixins/sort.pug
 include ../../mixins/filterByStatus.pug 
 include ../../mixins/alert.pug 
 include ../../mixins/pagination.pug 
+include ../../mixins/modal.pug 
 
 block main
     .container 
@@ -35,6 +36,7 @@ block main
                     .card-body.d-flex.justify-content-between 
                         +changeMulti("songs")
                         a(
+                            href=`${prefixAdmin}/songs/create`
                             class="btn btn-secondary"
                         ) 
                             i.fa-solid.fa-plus
@@ -76,7 +78,7 @@ block main
                                                 a(href=`${prefixAdmin}/songs/detail/${song.id}` class="btn btn-primary me-2") Chi tiết 
                                                 a(href=`${prefixAdmin}/songs/edit/${song.id}` class="btn btn-warning me-2") Sửa 
                                                 button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${song.slug}`) Xóa
-                                                //- +modal(song.slug, song.id, song.title, "bài viết", "blogs")
+                                                +modal(song.slug, song.id, song.title, "bài hát", "songs")
             
                             +pagination(pagination)
                         else 

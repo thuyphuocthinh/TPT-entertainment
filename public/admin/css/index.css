@@ -156,3 +156,55 @@ p {
     right: -10px;
     border-radius: 50%;
 }
+
+/* image-upload */
+
+.image-upload-btn,
+.audio-upload-btn {
+    width: 200px;
+    border: 1px solid rgb(219, 219, 219);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, .2);
+    cursor: pointer;
+    text-align: center;
+    display: block;
+}
+
+.image-preview-item {
+    position: relative;
+    width: fit-content;
+}
+
+.image-preview-close,
+.audio-preview-close {
+    position: absolute;
+    right: -5px;
+    top: 0;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #929292;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, .2);
+    cursor: pointer;
+}
+
+/* validation */
+
+.invalid {
+    border: 1px solid red;
+}
+
+.valid {
+    border: 1px solid green;
+}
+
+.error-msg {
+    color: red;
+    font-size: 14px;
+}

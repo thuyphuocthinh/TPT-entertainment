@@ -5,6 +5,7 @@ import Singers from "../../models/singers.model";
 import Topics from "../../models/topics.model";
 import { Pagination } from "../../interfaces/system.interface";
 import { pagination } from "../../helpers/pagination.helper";
+import { systemConfig } from "../../config/system.config";
 
 export const index = async (req: Request, res: Response) => {
   try {
@@ -80,7 +81,10 @@ export const index = async (req: Request, res: Response) => {
     };
     objPagination = pagination(objPagination, countRecords);
 
-    const songs = await Songs.find(find).sort(sortObj);
+    const songs = await Songs.find(find)
+      .sort(sortObj)
+      .limit(objPagination.limit)
+      .skip(objPagination.skip);
     for (const song of songs) {
       const singer = await Singers.findOne({
         _id: song.singerId,
@@ -177,6 +181,65 @@ export const changeMulti = async (req: Request, res: Response) => {
     }
 
     res.redirect("back");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteItem = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    await Songs.updateOne({ _id: id, deleted: false }, { deleted: true });
+    req.flash("success", "Xóa thành công");
+    res.redirect("back");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCreate = async (req: Request, res: Response) => {
+  try {
+    const singers = await Singers.find({ deleted: false, status: "active" });
+    const topics = await Topics.find({ deleted: false, status: "active" });
+
+    res.render("admin/pages/songs/create", {
+      pageTitle: "Thêm bài hát",
+      singers,
+      topics,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postCreate = async (req: Request, res: Response) => {
+  try {
+    let avatar = "";
+    let audio = "";
+
+    if (req.body.avatar[0]) {
+      avatar = req.body.avatar[0];
+    }
+
+    if (req.body.audio[0]) {
+      audio = req.body.audio[0];
+    }
+
+    const dataSong = {
+      title: req.body.title,
+      topicId: req.body.topicId,
+      singerId: req.body.singerId,
+      description: req.body.description,
+      status: req.body.status,
+      avatar: avatar,
+      audio: audio,
+      lyrics: req.body.lyrics,
+    };
+
+    const record = new Songs(dataSong);
+    await record.save();
+    req.flash("success", "Thêm bài hát mới thành công");
+    res.redirect(`${systemConfig.prefixAdmin}/songs`);
   } catch (error) {
     console.log(error);
   }
