@@ -4,5 +4,6 @@ const router: Router = Router();
 
 router.get("/", controller.index);
 router.get("/updateStatus/:id/:status", controller.updateStatus);
+router.patch("/changeMulti", controller.changeMulti);
 
 export const songsRoutes: Router = router;

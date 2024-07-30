@@ -79,7 +79,6 @@ export const index = async (req: Request, res: Response) => {
       limit: 4,
     };
     objPagination = pagination(objPagination, countRecords);
-    console.log(objPagination);
 
     const songs = await Songs.find(find).sort(sortObj);
     for (const song of songs) {
@@ -123,6 +122,60 @@ export const updateStatus = async (req: Request, res: Response) => {
       }
     );
     req.flash("success", "Cập nhật trạng thái thành công");
+    res.redirect("back");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const changeMulti = async (req: Request, res: Response) => {
+  try {
+    const updateObj: { changeMulti: string; ids: string } = JSON.parse(
+      req.body.updateInfo
+    );
+
+    const typeChange: string = updateObj.changeMulti;
+    const ids: string[] = updateObj.ids.split("-");
+    enum CHANGE_MULTI {
+      DELETE_ALL = "deleteAll",
+      CHANGE_STATUS = "changeStatus",
+    }
+
+    switch (typeChange) {
+      case CHANGE_MULTI.DELETE_ALL: {
+        ids.forEach(async (id) => {
+          await Songs.updateOne(
+            {
+              _id: id,
+              deleted: false,
+            },
+            {
+              deleted: true,
+            }
+          );
+        });
+        req.flash("success", "Cập nhật thành công");
+        break;
+      }
+      case CHANGE_MULTI.CHANGE_STATUS: {
+        ids.forEach(async (id) => {
+          const song = await Songs.findOne({ _id: id, deleted: false });
+          const statusChange = song.status === "active" ? "inactive" : "active";
+          await Songs.updateOne(
+            { _id: id, deleted: false },
+            {
+              status: statusChange,
+            }
+          );
+        });
+        req.flash("success", "Cập nhật thành công");
+        break;
+      }
+      default:
+        req.flash("error", "Lỗi cập nhật");
+        break;
+    }
+
     res.redirect("back");
   } catch (error) {
     console.log(error);

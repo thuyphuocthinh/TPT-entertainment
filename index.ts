@@ -7,6 +7,7 @@ import bodyparser from "body-parser";
 import flash from "express-flash";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import methodOverride from "method-override";
 import adminRoutes from "./routes/admin/index.route";
 
 const app: Express = express();
@@ -27,6 +28,9 @@ app.use(flash());
 
 // body-parser
 app.use(bodyparser.urlencoded({ extended: false }));
+
+// method-override
+app.use(methodOverride("_method"));
 
 // views
 app.set("views", "./views");
