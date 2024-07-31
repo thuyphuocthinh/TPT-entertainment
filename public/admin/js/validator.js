@@ -189,3 +189,17 @@ Validator({
     Validator.isRequired("#lyrics"),
   ],
 });
+
+Validator({
+  form: "#form-create-topic",
+  rules: [
+    Validator.isRequired("#title"),
+    Validator.isRequired("#description"),
+    Validator.isRequired("#avatar"),
+  ],
+});
+
+Validator({
+  form: "#form-edit-topic",
+  rules: [Validator.isRequired("#title"), Validator.isRequired("#description")],
+});

@@ -1,0 +1,49 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/image-upload.pug 
+include ../../mixins/alert.pug
+
+block main
+        .container 
+            +box-head(pageTitle)
+
+            .row.my-3
+                .col-md-6.col-12 
+                    .form-group     
+                        label(for="title" class="fw-bold") Tên
+                        input(type="text" name="title" readonly value=topic.title id="title" class="form-control") 
+                        p.error-msg
+            
+            .row.my-3
+                .col-md-6.col-12 
+                    .preview-image
+                        .image-preview-item
+                            span(class="fw-bold d-block") Ảnh
+                            img(
+                                src=topic.avatar 
+                                alt=topic.title 
+                                class="my-2 img-thumbnail" 
+                                width="200" 
+                                height="200" 
+                            )
+            
+            .row.my-3  
+                .col-md-6.col-12
+                    .card 
+                        .card-header.fw-bold Mô tả 
+                        .card-body !{topic.description}
+
+            .row.my-3 
+                .col-12
+                    .form-group 
+                        label(class="fw-bold me-3") Trạng thái 
+                        if(topic.status === "active") 
+                            span.badge.bg-success Active 
+                        else 
+                            span.badge.bg-danger Inactive
+                
+
+
+
+        
+
