@@ -244,3 +244,74 @@ export const postCreate = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+
+export const getEdit = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    const song = await Songs.findOne({ _id: id, deleted: false });
+    const singers = await Singers.find({ deleted: false, status: "active" });
+    const topics = await Topics.find({ deleted: false, status: "active" });
+    res.render("admin/pages/songs/edit", {
+      pageTitle: `Chỉnh sửa bài hát ${song.title}`,
+      song,
+      singers,
+      topics,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const patchEdit = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+
+    const dataSong = {
+      title: req.body.title,
+      topicId: req.body.topicId,
+      singerId: req.body.singerId,
+      description: req.body.description,
+      status: req.body.status,
+      lyrics: req.body.lyrics,
+    };
+
+    if (req.body.avatar) {
+      dataSong["avatar"] = req.body.avatar[0];
+    }
+
+    if (req.body.audio) {
+      dataSong["audio"] = req.body.audio[0];
+    }
+
+    await Songs.updateOne(
+      {
+        _id: id,
+      },
+      dataSong
+    );
+    req.flash("success", "Chỉnh sửa thành công");
+    res.redirect(`${systemConfig.prefixAdmin}/songs`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getDetail = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    const song = await Songs.findOne({ _id: id, deleted: false });
+    const singer = await Singers.findOne({
+      _id: song.singerId,
+      deleted: false,
+    }).select("fullName");
+    const topic = await Topics.findOne({ _id: song.topicId, deleted: false });
+    song["infoSinger"] = singer;
+    song["infoTopic"] = topic;
+    res.render("admin/pages/songs/detail", {
+      pageTitle: `Chi tiết bài hát ${song.title}`,
+      song,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

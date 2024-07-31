@@ -178,3 +178,14 @@ Validator({
     Validator.isRequired("#lyrics"),
   ],
 });
+
+Validator({
+  form: "#form-create-edit",
+  rules: [
+    Validator.isRequired("#title"),
+    Validator.isRequired("#topicId"),
+    Validator.isRequired("#singerId"),
+    Validator.isRequired("#description"),
+    Validator.isRequired("#lyrics"),
+  ],
+});

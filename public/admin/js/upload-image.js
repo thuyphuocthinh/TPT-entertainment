@@ -4,8 +4,10 @@ if (uploadImage) {
   uploadImage.addEventListener("change", (e) => {
     const file = e.target.files[0];
     const previewImage = document.querySelector(".preview-image");
-    if (previewImage.querySelector(".img-thumbnail")) {
-      previewImage.removeChild(previewImage.querySelector(".img-thumbnail"));
+    if (previewImage.querySelector(".image-preview-item")) {
+      previewImage.removeChild(
+        previewImage.querySelector(".image-preview-item")
+      );
     }
     if (previewImage) {
       const image = document.createElement("img");
