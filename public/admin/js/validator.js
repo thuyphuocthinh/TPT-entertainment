@@ -203,3 +203,13 @@ Validator({
   form: "#form-edit-topic",
   rules: [Validator.isRequired("#title"), Validator.isRequired("#description")],
 });
+
+Validator({
+  form: "#form-create-singer",
+  rules: [Validator.isRequired("#fullName"), Validator.isRequired("#avatar")],
+});
+
+Validator({
+  form: "#form-edit-singer",
+  rules: [Validator.isRequired("#fullName")],
+});

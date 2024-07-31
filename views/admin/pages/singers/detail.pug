@@ -1,0 +1,43 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/image-upload.pug 
+include ../../mixins/alert.pug
+
+block main
+        .container 
+            +box-head(pageTitle)
+
+            .row.my-3
+                .col-md-6.col-12 
+                    .form-group     
+                        label(for="fullName" class="fw-bold") Tên
+                        input(type="text" name="fullName" readonly value=singer.fullName id="fullName" class="form-control") 
+                        p.error-msg
+            
+            .row.my-3
+                .col-md-6.col-12 
+                    .preview-image
+                        .image-preview-item
+                            span(class="fw-bold d-block") Ảnh
+                            img(
+                                src=singer.avatar 
+                                alt=singer.title 
+                                class="my-2 img-thumbnail" 
+                                width="200" 
+                                height="200" 
+                            )
+
+            .row.my-3 
+                .col-12
+                    .form-group 
+                        label(class="fw-bold me-3") Trạng thái 
+                        if(singer.status === "active") 
+                            span.badge.bg-success Active 
+                        else 
+                            span.badge.bg-danger Inactive
+                
+
+
+
+        
+

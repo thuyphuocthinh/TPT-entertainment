@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Topics from "../../models/topics.model";
+import Singers from "../../models/singers.model";
 import { search } from "../../helpers/search.helper";
 import { Pagination } from "../../interfaces/system.interface";
 import { pagination } from "../../helpers/pagination.helper";
@@ -9,7 +10,7 @@ export const index = async (req: Request, res: Response) => {
   try {
     interface Find {
       deleted: boolean;
-      title?: RegExp;
+      fullName?: RegExp;
       status?: string;
     }
 
@@ -19,7 +20,7 @@ export const index = async (req: Request, res: Response) => {
 
     // search
     if (req.query.search) {
-      find.title = search(req).regex;
+      find.fullName = search(req).regex;
     }
 
     // sort criteria
@@ -28,11 +29,11 @@ export const index = async (req: Request, res: Response) => {
     const sortCriteria: { keyValue: string; title: string }[] = [
       {
         keyValue: "title-desc",
-        title: "Sắp xếp tên chủ đề giảm dần",
+        title: "Sắp xếp tên ca sĩ giảm dần",
       },
       {
         keyValue: "title-asc",
-        title: "Sắp xếp tên chủ đề tăng dần",
+        title: "Sắp xếp tên ca sĩ tăng dần",
       },
     ];
 
@@ -66,7 +67,7 @@ export const index = async (req: Request, res: Response) => {
     }
 
     // pagination
-    const countRecords = await Topics.countDocuments({ deleted: false });
+    const countRecords = await Singers.countDocuments({ deleted: false });
     let currentPage: number = 1;
     if (req.query.page) {
       currentPage = Number(req.query.page);
@@ -79,14 +80,14 @@ export const index = async (req: Request, res: Response) => {
     };
     objPagination = pagination(objPagination, countRecords);
 
-    const topics = await Topics.find(find)
+    const singers = await Singers.find(find)
       .sort(sortObj)
       .limit(objPagination.limit)
       .skip(objPagination.skip);
 
-    res.render("admin/pages/topics/index", {
-      pageTitle: "Quản lí chủ đề",
-      topics,
+    res.render("admin/pages/singers/index", {
+      pageTitle: "Quản lí ca sĩ",
+      singers,
       keyword: req.query.search || "",
       sortCriteria,
       sortBy: sortBy,
@@ -103,7 +104,7 @@ export const updateStatus = async (req: Request, res: Response) => {
   try {
     const statusChange: string = req.params.status;
     const id: string = req.params.id;
-    await Topics.updateOne(
+    await Singers.updateOne(
       {
         _id: id,
       },
@@ -176,7 +177,7 @@ export const changeMulti = async (req: Request, res: Response) => {
 export const deleteItem = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    await Topics.updateOne({ _id: id, deleted: false }, { deleted: true });
+    await Singers.updateOne({ _id: id, deleted: false }, { deleted: true });
     req.flash("success", "Xóa thành công");
     res.redirect("back");
   } catch (error) {
@@ -186,7 +187,7 @@ export const deleteItem = async (req: Request, res: Response) => {
 
 export const getCreate = async (req: Request, res: Response) => {
   try {
-    res.render("admin/pages/topics/create", {
+    res.render("admin/pages/singers/create", {
       pageTitle: "Thêm chủ đề",
     });
   } catch (error) {
@@ -201,17 +202,16 @@ export const postCreate = async (req: Request, res: Response) => {
       avatar = req.body.avatar;
     }
 
-    const dataTopic = {
-      title: req.body.title,
-      description: req.body.description,
+    const dataSinger = {
+      fullName: req.body.fullName,
       status: req.body.status,
       avatar: avatar,
     };
 
-    const record = new Topics(dataTopic);
+    const record = new Singers(dataSinger);
     await record.save();
-    req.flash("success", "Thêm chủ đề mới thành công");
-    res.redirect(`${systemConfig.prefixAdmin}/topics`);
+    req.flash("success", "Thêm bài hát mới thành công");
+    res.redirect(`${systemConfig.prefixAdmin}/singers`);
   } catch (error) {
     console.log(error);
   }
@@ -220,14 +220,14 @@ export const postCreate = async (req: Request, res: Response) => {
 export const getEdit = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    const topic = await Topics.findOne({
+    const singer = await Singers.findOne({
       _id: id,
       deleted: false,
       status: "active",
     });
-    res.render("admin/pages/topics/edit", {
-      pageTitle: `Chỉnh sửa chủ đề ${topic.title}`,
-      topic,
+    res.render("admin/pages/singers/edit", {
+      pageTitle: `Chỉnh sửa ca sĩ ${singer.fullName}`,
+      singer,
     });
   } catch (error) {
     console.log(error);
@@ -238,25 +238,24 @@ export const patchEdit = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
 
-    const dataTopic = {
-      title: req.body.title,
-      description: req.body.description,
+    const dataSinger = {
+      fullName: req.body.fullName,
       status: req.body.status,
     };
 
     if (req.body.avatar) {
-      dataTopic["avatar"] = req.body.avatar;
+      dataSinger["avatar"] = req.body.avatar;
     }
 
-    await Topics.updateOne(
+    await Singers.updateOne(
       {
         _id: id,
       },
-      dataTopic
+      dataSinger
     );
 
     req.flash("success", "Chỉnh sửa thành công");
-    res.redirect(`${systemConfig.prefixAdmin}/topics`);
+    res.redirect(`${systemConfig.prefixAdmin}/singers`);
   } catch (error) {
     console.log(error);
   }
@@ -265,10 +264,10 @@ export const patchEdit = async (req: Request, res: Response) => {
 export const getDetail = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    const topic = await Topics.findOne({ _id: id, deleted: false });
-    res.render("admin/pages/topics/detail", {
-      pageTitle: `Chi tiết chủ đề ${topic.title}`,
-      topic,
+    const singer = await Singers.findOne({ _id: id, deleted: false });
+    res.render("admin/pages/singers/detail", {
+      pageTitle: `Chi tiết ca sĩ ${singer.fullName}`,
+      singer,
     });
   } catch (error) {
     console.log(error);
