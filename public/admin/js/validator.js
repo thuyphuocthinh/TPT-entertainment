@@ -213,3 +213,8 @@ Validator({
   form: "#form-edit-singer",
   rules: [Validator.isRequired("#fullName")],
 });
+
+Validator({
+  form: "#form-create-role",
+  rules: [Validator.isRequired("#title"), Validator.isRequired("#description")],
+});
