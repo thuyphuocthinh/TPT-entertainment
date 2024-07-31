@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import Topics from "../../models/topics.model";
 import Roles from "../../models/roles.model";
+import Accounts from "../../models/accounts.model";
 import { search } from "../../helpers/search.helper";
 import { Pagination } from "../../interfaces/system.interface";
 import { pagination } from "../../helpers/pagination.helper";
@@ -24,15 +26,15 @@ export const index = async (req: Request, res: Response) => {
 
     // sort criteria
     let sortBy: string = "";
-    let sortObj: {} = { title: "desc" };
+    let sortObj: {} = { email: "desc" };
     const sortCriteria: { keyValue: string; title: string }[] = [
       {
         keyValue: "title-desc",
-        title: "Sắp xếp tên vai trò giảm dần",
+        title: "Sắp xếp email giảm dần",
       },
       {
         keyValue: "title-asc",
-        title: "Sắp xếp tên vai trò tăng dần",
+        title: "Sắp xếp email tăng dần",
       },
     ];
 
@@ -66,7 +68,7 @@ export const index = async (req: Request, res: Response) => {
     }
 
     // pagination
-    const countRecords = await Roles.countDocuments({ deleted: false });
+    const countRecords = await Accounts.countDocuments({ deleted: false });
     let currentPage: number = 1;
     if (req.query.page) {
       currentPage = Number(req.query.page);
@@ -79,14 +81,14 @@ export const index = async (req: Request, res: Response) => {
     };
     objPagination = pagination(objPagination, countRecords);
 
-    const roles = await Roles.find(find)
+    const accounts = await Accounts.find(find)
       .sort(sortObj)
       .limit(objPagination.limit)
       .skip(objPagination.skip);
 
-    res.render("admin/pages/roles/index", {
+    res.render("admin/pages/accounts/index", {
       pageTitle: "Quản lí vai trò",
-      roles,
+      accounts,
       keyword: req.query.search || "",
       sortCriteria,
       sortBy: sortBy,
@@ -134,7 +136,7 @@ export const changeMulti = async (req: Request, res: Response) => {
     switch (typeChange) {
       case CHANGE_MULTI.DELETE_ALL: {
         ids.forEach(async (id) => {
-          await Roles.updateOne(
+          await Topics.updateOne(
             {
               _id: id,
               deleted: false,
@@ -149,9 +151,10 @@ export const changeMulti = async (req: Request, res: Response) => {
       }
       case CHANGE_MULTI.CHANGE_STATUS: {
         ids.forEach(async (id) => {
-          const role = await Roles.findOne({ _id: id, deleted: false });
-          const statusChange = role.status === "active" ? "inactive" : "active";
-          await Roles.updateOne(
+          const topic = await Topics.findOne({ _id: id, deleted: false });
+          const statusChange =
+            topic.status === "active" ? "inactive" : "active";
+          await Topics.updateOne(
             { _id: id, deleted: false },
             {
               status: statusChange,
@@ -237,7 +240,7 @@ export const patchEdit = async (req: Request, res: Response) => {
       description: req.body.description,
     };
 
-    await Roles.updateOne(
+    await Topics.updateOne(
       {
         _id: id,
       },
@@ -250,3 +253,4 @@ export const patchEdit = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+

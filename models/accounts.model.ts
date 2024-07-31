@@ -9,6 +9,11 @@ const accountsSchema = new mongoose.Schema(
     token: String,
     roleId: String,
     status: String,
+    slug: {
+      slug: "email",
+      unique: true,
+      type: String,
+    },
     deleted: {
       type: Boolean,
       default: false,

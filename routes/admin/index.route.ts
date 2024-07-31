@@ -5,6 +5,7 @@ import { systemConfig } from "../../config/system.config";
 import { topicsRoutes } from "./topics.route";
 import { singersRoutes } from "./singers.route";
 import { rolesRoutes } from "./roles.route";
+import { accountsRoutes } from "./accounts.route";
 
 const adminRoutes = (app: Express) => {
   app.use(`${systemConfig.prefixAdmin}/`, dashboardRoutes);
@@ -12,6 +13,7 @@ const adminRoutes = (app: Express) => {
   app.use(`${systemConfig.prefixAdmin}/topics`, topicsRoutes);
   app.use(`${systemConfig.prefixAdmin}/singers`, singersRoutes);
   app.use(`${systemConfig.prefixAdmin}/roles`, rolesRoutes);
+  app.use(`${systemConfig.prefixAdmin}/accounts`, accountsRoutes);
 };
 
 export default adminRoutes;
