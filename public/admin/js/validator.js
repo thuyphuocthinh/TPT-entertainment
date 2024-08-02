@@ -218,3 +218,32 @@ Validator({
   form: "#form-create-role",
   rules: [Validator.isRequired("#title"), Validator.isRequired("#description")],
 });
+
+Validator({
+  form: "#form-create-account",
+  rules: [
+    Validator.isRequired("#email"),
+    Validator.isRequired("#password"),
+    Validator.isRequired("#roleId"),
+    Validator.isPassword("#password", 8),
+  ],
+});
+
+Validator({
+  form: "#form-edit-account",
+  rules: [Validator.isRequired("#email"), Validator.isRequired("#roleId")],
+});
+
+Validator({
+  form: "#form-login",
+  rules: [
+    Validator.isRequired("#email"),
+    Validator.isRequired("#password"),
+    Validator.isPassword("#password", 8),
+  ],
+});
+
+Validator({
+  form: "#form-create-carousels",
+  rules: [Validator.isRequired("#image")],
+});

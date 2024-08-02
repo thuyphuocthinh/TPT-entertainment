@@ -2,5 +2,5 @@ nav.navbar.bg-dark
     #navbar
         a.navbar-brand(href='#') TPT-entertainment
         .navbar-right 
-            a(href="#") Admin 
-            a(href="#").btn.btn-secondary Đăng xuất
+            a(href=`${prefixAdmin}/accounts`)  #{user.email} - #{role.title}
+            a(href=`${prefixAdmin}/auth/logout`).btn.btn-secondary Đăng xuất

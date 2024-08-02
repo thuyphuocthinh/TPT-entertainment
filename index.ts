@@ -3,7 +3,6 @@ import { systemConfig } from "./config/system.config";
 import * as database from "./config/database.config";
 import express from "express";
 import dotenv from "dotenv";
-import bodyparser from "body-parser";
 import flash from "express-flash";
 import cookieParser from "cookie-parser";
 import session from "express-session";
@@ -24,11 +23,18 @@ app.use(express.static("public"));
 
 // flash
 app.use(cookieParser("TPT"));
-app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(
+  session({
+    secret: "TPT", // Ensure this secret matches your use case
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }, // Set to true if using HTTPS
+  })
+);
 app.use(flash());
 
 // body-parser
-app.use(bodyparser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // method-override
 app.use(methodOverride("_method"));

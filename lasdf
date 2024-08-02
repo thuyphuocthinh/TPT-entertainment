@@ -1,0 +1,66 @@
+[33mcommit 3c0b922855c1122f4b3944d50c18f1ede739ff9d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Wed Jul 31 16:35:18 2024 +0700
+
+    Index page accounts management
+
+[33mcommit 9fc8b5b0645109fe60faef63c57001cc7cf1062f[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Wed Jul 31 16:20:57 2024 +0700
+
+    Roles management
+
+[33mcommit 2bb26eaf0fb531368df9f31f975719ffd50b3eb9[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Wed Jul 31 15:38:59 2024 +0700
+
+    Singers management
+
+[33mcommit 4dee1a331edbcd686d4618b0a88030ef696c2f69[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Wed Jul 31 15:13:17 2024 +0700
+
+    Topics management
+
+[33mcommit ab61a0fde2df90db0d8486870aa88bf9bfdc2b73[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Wed Jul 31 14:30:06 2024 +0700
+
+    Completed songs management
+
+[33mcommit 055fb5c70becc70f2c0e7907f07490ab1d773224[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Tue Jul 30 15:37:59 2024 +0700
+
+    Create song
+
+[33mcommit 684b92fc2b187c4764c53f3f4a5340cd14834f7a[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Tue Jul 30 13:57:22 2024 +0700
+
+    change multi
+
+[33mcommit 5764c6b0f0ff02c5788785226fd698394b322979[m
+Merge: c79fa36 7318576
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Mon Jul 29 22:16:47 2024 +0700
+
+    Merge branch 'main' of https://github.com/thuyphuocthinh/TPT-entertainment
+
+[33mcommit c79fa365873f37aec73bad6a07fb1a58aa687be7[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Mon Jul 29 22:16:16 2024 +0700
+
+    Set up project, added songs managment...
+
+[33mcommit e883892076813907fc4c742a9b9e9f9716332038[m[33m ([m[1;32mmaster[m[33m)[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Mon Jul 29 14:29:52 2024 +0700
+
+    Created project
+
+[33mcommit 7318576894fca50b82b9b83ad9cba210bb94b457[m
+Author: Thủy Phước Thịnh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Mon Jul 29 14:28:06 2024 +0700
+
+    Create README.md

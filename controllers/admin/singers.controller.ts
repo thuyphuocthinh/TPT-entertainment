@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import Topics from "../../models/topics.model";
 import Singers from "../../models/singers.model";
 import { search } from "../../helpers/search.helper";
 import { Pagination } from "../../interfaces/system.interface";
@@ -135,7 +134,7 @@ export const changeMulti = async (req: Request, res: Response) => {
     switch (typeChange) {
       case CHANGE_MULTI.DELETE_ALL: {
         ids.forEach(async (id) => {
-          await Topics.updateOne(
+          await Singers.updateOne(
             {
               _id: id,
               deleted: false,
@@ -150,10 +149,10 @@ export const changeMulti = async (req: Request, res: Response) => {
       }
       case CHANGE_MULTI.CHANGE_STATUS: {
         ids.forEach(async (id) => {
-          const topic = await Topics.findOne({ _id: id, deleted: false });
+          const singer = await Singers.findOne({ _id: id, deleted: false });
           const statusChange =
-            topic.status === "active" ? "inactive" : "active";
-          await Topics.updateOne(
+            singer.status === "active" ? "inactive" : "active";
+          await Singers.updateOne(
             { _id: id, deleted: false },
             {
               status: statusChange,

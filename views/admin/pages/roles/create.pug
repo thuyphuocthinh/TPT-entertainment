@@ -3,6 +3,7 @@ include ../../mixins/box-head.pug
 include ../../mixins/alert.pug
 
 block main
+    if (role.permissions.includes("roles-create"))
         .container 
             +box-head(pageTitle)
             include ../../partials/require.pug

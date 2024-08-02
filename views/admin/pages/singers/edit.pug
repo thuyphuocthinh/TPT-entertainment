@@ -4,6 +4,7 @@ include ../../mixins/image-upload.pug
 include ../../mixins/alert.pug
 
 block main
+    if (role.permissions.includes("singers-edit"))
         .container 
             +box-head(pageTitle)
             include ../../partials/require.pug

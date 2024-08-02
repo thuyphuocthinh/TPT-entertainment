@@ -1,7 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug 
 include ../../mixins/search.pug 
-include ../../mixins/changeMulti.pug 
 include ../../mixins/status.pug 
 include ../../mixins/sort.pug 
 include ../../mixins/filterByStatus.pug 
@@ -30,56 +29,33 @@ block main
                                 .col-4 
                                     +filterByStatus(filterCriteria, filter)
             
-            if (role.permissions.includes("accounts-edit") && role.permissions.includes("accounts-create"))
-                .row.mt-4 
-                    .col-12 
-                        .card 
-                            .card-header.fw-bold Cập nhật, Thêm mới 
-                            .card-body.d-flex.justify-content-between 
-                                +changeMulti("accounts")
-                                a(
-                                    href=`${prefixAdmin}/accounts/create`
-                                    class="btn btn-secondary"
-                                ) 
-                                    i.fa-solid.fa-plus
-                                    span.ms-2 Thêm mới
-
             .row.mt-4 
                 .col-12 
                     .card 
                         .card-header.fw-bold Danh sách 
                         .card-body 
-                            if (accounts.length > 0) 
+                            if (users.length > 0) 
                                 table.table.table-hover
                                     thead
                                         tr.text-center
                                             th(scope='col')
                                                 input(type="checkbox" name="" checkbox-all class="form-check-input")
                                             th(scope='col') STT
-                                            th(scope='col') Email 
-                                            th(scope='col') Vai trò 
+                                            th(scope='col') Tên 
                                             th(scope='col') Status 
-                                            th(scope='col') Actions
                                     
                                     tbody
-                                        each account, index in accounts 
+                                        each user, index in users 
                                             tr.text-center.align-middle 
                                                 td 
                                                     input(type="checkbox" name="" checkbox-single=account.id class="form-check-input")    
                                                 td #{index + 1}
-                                                td.fw-bold #{account.email}
-                                                td #{account.infoRole.title}
+                                                td.fw-bold #{user.fullName}
                                                 td 
-                                                    +status(account, "accounts")
-                                                td 
-                                                    if (role.permissions.includes("accounts-edit"))
-                                                        a(href=`${prefixAdmin}/accounts/edit/${account.id}` class="btn btn-warning me-2") Sửa 
-                                                    if (role.permissions.includes("accounts-delete"))
-                                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${account.slug}`) Xóa
-                                                    +modal(account.slug, account.id, account.email, "tài khoản", "accounts")
+                                                    +status(user, "users")
                 
                                 +pagination(pagination)
                             else 
-                                tr(col-span="8") Chưa có vai trò nào 
+                                tr(col-span="8") Chưa có người dùng nào 
 
         script(src="/admin/js/index.js") 

@@ -79,10 +79,11 @@ if (checkBoxAllBtn) {
         const id = btn.getAttribute("checkbox-single");
         if (checkBoxAllBtn.checked) {
           ids.push(id);
+          cntBoxes++;
         } else {
+          cntBoxes--;
           ids = [];
         }
-        cntBoxes++;
       });
     }
   });

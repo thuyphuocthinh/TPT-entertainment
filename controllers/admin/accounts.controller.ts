@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
-import Topics from "../../models/topics.model";
 import Roles from "../../models/roles.model";
 import Accounts from "../../models/accounts.model";
+import md5 from "md5";
 import { search } from "../../helpers/search.helper";
 import { Pagination } from "../../interfaces/system.interface";
 import { pagination } from "../../helpers/pagination.helper";
 import { systemConfig } from "../../config/system.config";
+import { generateRandomString } from "../../helpers/generator.helper";
 
 export const index = async (req: Request, res: Response) => {
   try {
@@ -86,8 +87,13 @@ export const index = async (req: Request, res: Response) => {
       .limit(objPagination.limit)
       .skip(objPagination.skip);
 
+    for (const account of accounts) {
+      const role = await Roles.findOne({ _id: account.roleId, deleted: false });
+      account["infoRole"] = role;
+    }
+
     res.render("admin/pages/accounts/index", {
-      pageTitle: "Quản lí vai trò",
+      pageTitle: "Quản lí tài khoản admin",
       accounts,
       keyword: req.query.search || "",
       sortCriteria,
@@ -105,7 +111,7 @@ export const updateStatus = async (req: Request, res: Response) => {
   try {
     const statusChange: string = req.params.status;
     const id: string = req.params.id;
-    await Roles.updateOne(
+    await Accounts.updateOne(
       {
         _id: id,
       },
@@ -136,7 +142,7 @@ export const changeMulti = async (req: Request, res: Response) => {
     switch (typeChange) {
       case CHANGE_MULTI.DELETE_ALL: {
         ids.forEach(async (id) => {
-          await Topics.updateOne(
+          await Accounts.updateOne(
             {
               _id: id,
               deleted: false,
@@ -151,10 +157,10 @@ export const changeMulti = async (req: Request, res: Response) => {
       }
       case CHANGE_MULTI.CHANGE_STATUS: {
         ids.forEach(async (id) => {
-          const topic = await Topics.findOne({ _id: id, deleted: false });
+          const account = await Accounts.findOne({ _id: id, deleted: false });
           const statusChange =
-            topic.status === "active" ? "inactive" : "active";
-          await Topics.updateOne(
+            account.status === "active" ? "inactive" : "active";
+          await Accounts.updateOne(
             { _id: id, deleted: false },
             {
               status: statusChange,
@@ -178,7 +184,7 @@ export const changeMulti = async (req: Request, res: Response) => {
 export const deleteItem = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    await Roles.updateOne({ _id: id, deleted: false }, { deleted: true });
+    await Accounts.updateOne({ _id: id, deleted: false }, { deleted: true });
     req.flash("success", "Xóa thành công");
     res.redirect("back");
   } catch (error) {
@@ -188,8 +194,10 @@ export const deleteItem = async (req: Request, res: Response) => {
 
 export const getCreate = async (req: Request, res: Response) => {
   try {
-    res.render("admin/pages/roles/create", {
-      pageTitle: "Thêm vai trò",
+    const roles = await Roles.find({ deleted: false });
+    res.render("admin/pages/accounts/create", {
+      pageTitle: "Thêm tài khoản",
+      roles,
     });
   } catch (error) {
     console.log(error);
@@ -198,16 +206,25 @@ export const getCreate = async (req: Request, res: Response) => {
 
 export const postCreate = async (req: Request, res: Response) => {
   try {
-    const dataRole = {
-      title: req.body.title,
+    const checkEmail = await Accounts.findOne({ email: req.body.email });
+    if (checkEmail) {
+      req.flash("error", "Email đã tồn tại");
+      res.redirect("back");
+      return;
+    }
+
+    const dataAccount = {
+      email: req.body.email,
+      password: md5(req.body.password),
       status: req.body.status,
-      description: req.body.description,
+      token: generateRandomString(30),
+      roleId: req.body.roleId,
     };
 
-    const record = new Roles(dataRole);
+    const record = new Accounts(dataAccount);
     await record.save();
-    req.flash("success", "Thêm vai trò mới thành công");
-    res.redirect(`${systemConfig.prefixAdmin}/roles`);
+    req.flash("success", "Thêm tài khoản mới thành công");
+    res.redirect(`${systemConfig.prefixAdmin}/accounts`);
   } catch (error) {
     console.log(error);
   }
@@ -216,14 +233,16 @@ export const postCreate = async (req: Request, res: Response) => {
 export const getEdit = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    const role = await Roles.findOne({
+    const account = await Accounts.findOne({
       _id: id,
       deleted: false,
       status: "active",
     });
-    res.render("admin/pages/roles/edit", {
-      pageTitle: `Chỉnh sửa vai trò ${role.title}`,
-      role,
+    const roles = await Roles.find({ deleted: false });
+    res.render("admin/pages/accounts/edit", {
+      pageTitle: `Chỉnh sửa tài khoản`,
+      account,
+      roles,
     });
   } catch (error) {
     console.log(error);
@@ -233,24 +252,25 @@ export const getEdit = async (req: Request, res: Response) => {
 export const patchEdit = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-
-    const dataRole = {
-      title: req.body.title,
+    const dataAccount = {
+      email: req.body.email,
       status: req.body.status,
-      description: req.body.description,
+      roleId: req.body.roleId,
     };
+    if (req.body.password) {
+      dataAccount["password"] = md5(req.body.password);
+    }
 
-    await Topics.updateOne(
+    await Accounts.updateOne(
       {
         _id: id,
       },
-      dataRole
+      dataAccount
     );
 
     req.flash("success", "Chỉnh sửa thành công");
-    res.redirect(`${systemConfig.prefixAdmin}/roles`);
+    res.redirect(`${systemConfig.prefixAdmin}/accounts`);
   } catch (error) {
     console.log(error);
   }
 };
-

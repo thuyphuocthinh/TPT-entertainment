@@ -3,7 +3,10 @@ include ../../mixins/box-head.pug
 include ../../mixins/search.pug 
 include ../../mixins/changeMulti.pug 
 include ../../mixins/status.pug 
+include ../../mixins/alert.pug 
 
 block main
-    .container 
-        +box-head(pageTitle)
+    if (role.permissions.includes("dashboard-view"))
+        .container 
+            +box-head(pageTitle)
+            +alertSuccess(3000)
