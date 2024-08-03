@@ -25,5 +25,6 @@ router.post(
   uploadCloudinary.uploadSingle,
   controller.postCreate
 );
+router.get("/carousels/delete/:id", controller.deleteItem);
 
 export const interfacesRoutes: Router = router;

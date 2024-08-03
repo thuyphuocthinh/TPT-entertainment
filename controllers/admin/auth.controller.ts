@@ -52,7 +52,7 @@ export const postLogin = async (req: Request, res: Response) => {
 
     req.flash("success", "Đăng nhập thành công");
     res.cookie("token", checkEmail.token);
-    res.redirect(`${systemConfig.prefixAdmin}/singers`);
+    res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
   } catch (error) {
     console.log(error);
   }
@@ -71,3 +71,11 @@ export const logout = (req: Request, res: Response) => {
     console.log(error);
   }
 };
+   
+
+/*
+  1. AuthRoutes => không có middleware => lỗi không liên quan đến middleware
+  2. Khi có token trong cookie, getLogin hoạt động bình thường => middleware không có vấn đề gì
+  3. Vấn đề xảy ra khi => bấm logout => xóa token trong cookie => cook => đm :vvvv => đùa à
+  03/08/2024 => vô fix bug => mọi chuyện lại hoạt động như thường => wtf => đùa tôi à :vvv
+*/

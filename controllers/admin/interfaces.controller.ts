@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import Carousels from "../../models/carousels.model";
 import { systemConfig } from "../../config/system.config";
+import Carousels from "../../models/carousels.model";
 
 export const index = async (req: Request, res: Response) => {
   try {
@@ -31,6 +31,17 @@ export const postCreate = async (req: Request, res: Response) => {
     await record.save();
     req.flash("success", "Thêm mới carousel thành công");
     res.redirect(`${systemConfig.prefixAdmin}/interfaces/carousels`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteItem = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    await Carousels.updateOne({ _id: id, deleted: false }, { deleted: true });
+    req.flash("success", "Xóa thành công");
+    res.redirect("back");
   } catch (error) {
     console.log(error);
   }

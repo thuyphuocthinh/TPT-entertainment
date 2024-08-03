@@ -8,6 +8,7 @@ import { rolesRoutes } from "./roles.route";
 import { accountsRoutes } from "./accounts.route";
 import { authRoutes } from "./auth.route";
 import { permissionsRoutes } from "./permissions.route";
+
 // middlewares
 import * as authMiddleware from "../../middlewares/admin/auth.middleware";
 import { userRoutes } from "./users.route";
@@ -16,7 +17,7 @@ import { settingsRoutes } from "./settings.route";
 
 const adminRoutes = (app: Express) => {
   app.use(
-    `${systemConfig.prefixAdmin}/`,
+    `${systemConfig.prefixAdmin}/dashboard`,
     authMiddleware.requireAuth,
     dashboardRoutes
   );

@@ -18,6 +18,7 @@ export const requireAuth = async (
       if (user) {
         const role = await Roles.findOne({ _id: user.roleId, deleted: false });
         res.locals.role = role;
+        res.locals.originalUrl = req.originalUrl;
         res.locals.user = user;
         next();
       } else {
