@@ -9,6 +9,7 @@ import session from "express-session";
 import methodOverride from "method-override";
 import path from "path";
 import adminRoutes from "./routes/admin/index.route";
+import clientsRoutes from "./routes/clients/index.route";
 
 const app: Express = express();
 
@@ -54,6 +55,7 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 // routes
 adminRoutes(app);
+clientsRoutes(app);
 
 // port
 const port: number | string = process.env.PORT;

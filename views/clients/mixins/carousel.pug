@@ -1,0 +1,11 @@
+mixin carousel(carousels)
+    section.splide(aria-label='Carousel')
+        .splide__track
+            ul.splide__list
+                each item in carousels
+                    li.splide__slide 
+                        img(
+                            src=item.image
+                            alt=item.image
+                            class="carousel-img"
+                        )

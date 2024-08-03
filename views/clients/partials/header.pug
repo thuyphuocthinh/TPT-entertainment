@@ -1,0 +1,73 @@
+nav.navbar
+    .container-fluid.container-lg
+        #navbar
+            .navbar-left 
+                a(
+                    href='/' 
+                    class="fw-bold navbar-brand d-md-block d-none"
+                ) TPT-entertainment
+                
+                span.d-md-none.d-flex.align-items-center.gap-3
+                    button(
+                        class="navbar-toggler menu-icon" 
+                        type="button" 
+                        data-bs-toggle="offcanvas" 
+                        data-bs-target="#offcanvasNavbar" 
+                        aria-controls="offcanvasNavbar"
+                    )
+                        i.fa-solid.fa-bars
+                    a(
+                        href="/"
+                        class="fw-bold navbar-brand"
+                    ) TPT 
+
+                ul.navbar-list  
+                    li.navbar-item 
+                        a(href="#" class="navbar-link") Bài hát
+                    li.navbar-item  
+                        a(href="#" class="navbar-link") Chủ đề 
+                    li.navbar-item
+                        a(href="#" class="navbar-link") Ca sĩ  
+                    li.navbar-item
+                        a(href="#" class="navbar-link") Bảng xếp hạng  
+
+            #offcanvasNavbar.offcanvas.offcanvas-end(
+                tabindex='-1' 
+                aria-labelledby='offcanvasNavbarLabel'
+            )
+                .offcanvas-header
+                    h5#offcanvasNavbarLabel.offcanvas-title Menu
+                    button.btn-close(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+                .offcanvas-body
+                    ul.navbar-nav.justify-content-end.flex-grow-1.pe-3
+                        li.nav-item
+                            a.nav-link(href='/songs') Bài hát
+                        li.nav-item
+                            a.nav-link(href='/topics') Chủ đề
+                        li.nav-item
+                            a.nav-link(href='/singers') Ca sĩ
+                        li.nav-item
+                            a.nav-link(href='/ranking') Bảng xếp hạng
+
+
+            .navbar-right 
+                form(
+                    class="d-flex me-3"
+                    id="navbar-search"
+                    role="search"
+                    method="GET"
+                    form-search
+                )
+                    input.form-control.me-2(
+                        type='search' 
+                        name="search" 
+                        value=keyword 
+                        placeholder='Tìm kiếm tên bài hát' 
+                        aria-label='Search'
+                    )
+
+                a(href=`${prefixAdmin}/login`) Đăng nhập
+                a(  
+                    href=`${prefixAdmin}/register` 
+                    class="ms-3"
+                ).btn.btn-primary Đăng kí
