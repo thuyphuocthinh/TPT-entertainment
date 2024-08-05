@@ -1,0 +1,18 @@
+mixin topic-item(topic)
+    a(href=`${prefixAdmin}/topic/${topic.slug}` class="d-block") 
+        .item.topic-item 
+            .item-img 
+                img(src=topic.avatar, alt=topic.title, class="d-block")
+            .item-heading 
+                h6.mt-2 #{topic.title} 
+
+
+mixin song-item(song)
+    a(href=`${prefixAdmin}/songs/${song.slug}` class="d-block") 
+        .item.song-item 
+            .item-img 
+                img(src=song.avatar, alt=song.title, class="d-block")
+            .item-info 
+                h6 #{song.title}
+                if(song.infoSinger)
+                    p=song.infoSinger.fullName

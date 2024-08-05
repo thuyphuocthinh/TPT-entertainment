@@ -51,23 +51,34 @@ nav.navbar
 
 
             .navbar-right 
-                form(
-                    class="d-flex me-3"
-                    id="navbar-search"
-                    role="search"
-                    method="GET"
-                    form-search
-                )
-                    input.form-control.me-2(
-                        type='search' 
-                        name="search" 
-                        value=keyword 
-                        placeholder='Tìm kiếm tên bài hát' 
-                        aria-label='Search'
+                .search
+                    form(
+                        class="d-flex me-3"
+                        id="navbar-search"
+                        role="search"
+                        method="GET"
+                        action="/search/result"
+                        form-search
                     )
+                        input.form-control.me-2(
+                            type='search' 
+                            name="keyword" 
+                            autocomplete="off"
+                            autosuggest="off"
+                            value=keyword 
+                            placeholder='Tìm kiếm tên bài hát' 
+                            aria-label='Search'
+                        )
+                    .search-suggest
 
-                a(href=`${prefixAdmin}/login`) Đăng nhập
-                a(  
-                    href=`${prefixAdmin}/register` 
-                    class="ms-3"
-                ).btn.btn-primary Đăng kí
+                if(user)    
+                    a(href=`/users/${user.id}` class="me-4") 
+                        i.fa-solid.fa-user
+                        span.ms-2 #{user.fullName}
+                    a(href="/auth/logout" class="btn btn-secondary") Đăng xuất 
+                else
+                    a(href=`/auth/login`) Đăng nhập
+                    a(  
+                        href=`/auth/register` 
+                        class="ms-3"
+                    ).btn.btn-primary Đăng kí

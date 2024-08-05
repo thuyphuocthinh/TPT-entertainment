@@ -11,6 +11,7 @@
 
 body {
     font-size: 100%;
+    overflow-x: hidden;
 }
 
 a {
@@ -90,6 +91,57 @@ a {
     }
 }
 
+/* search suggest */
+.search {
+    position: relative;
+}
+
+.search-suggest {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 300px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, .4);
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.search-suggest.show {
+    display: block;
+}
+
+.search-suggest a {
+    display: block;
+    padding: 5px 10px;
+}
+
+.search-suggest a:hover {
+    background-color: #d7d7d7;
+}
+
+.search-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-img {
+    width: 50px;
+    height: 50px;
+}
+
+.search-img img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.search-info p,
+.search-info span {
+    margin: 10px 0;
+    font-size: 12px;
+}
+
 /* main */
 .main {
     margin-top: calc(var(--header-height) + 2rem);
@@ -105,4 +157,100 @@ a {
         height: 300px;
         background-color: #0056d6
     }
+}
+
+#topic-carousel {
+    position: relative;
+}
+
+.owl-carousel .owl-nav button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    background-color: #d7d7d7 !important;
+    border-radius: 50%;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, .4);
+    color: black;
+}
+
+.owl-carousel .owl-nav button span {
+    font-weight: 500;
+    font-size: 30px;
+    position: relative;
+    display: block;
+    top: -3px;
+}
+
+.owl-carousel .owl-nav button:hover {
+    background-color: #efefef !important;
+}
+
+.owl-carousel .owl-nav button.owl-next {
+    right: -5px;
+}
+
+.owl-carousel .owl-nav button.owl-prev {
+    left: -5px;
+}
+
+.song-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* validation */
+
+.invalid {
+    border: 1px solid red;
+}
+
+.valid {
+    border: 1px solid green;
+}
+
+.error-msg {
+    color: red;
+    font-size: 14px;
+}
+
+/* alert */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(calc(100% + 32px));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+.message.info {
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    z-index: 40;
+    width: 400px;
+    transition: all linear 0.3s;
+    animation: slideInLeft ease .5s;
+}
+
+.alert-btn-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    border-radius: 50%;
 }
