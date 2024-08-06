@@ -8,7 +8,10 @@ const usersSchema = new mongoose.Schema(
     fullName: String,
     password: String,
     tokenUser: String,
-    status: String,
+    status: {
+      type: String,
+      default: "active",
+    },
     slug: {
       slug: "email",
       unique: true,

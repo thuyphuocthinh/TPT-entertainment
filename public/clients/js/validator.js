@@ -170,6 +170,7 @@ Validator({
   form: "#form-login",
   rules: [
     Validator.isRequired("#email"),
+    Validator.isEmail("#email"),
     Validator.isRequired("#password"),
     Validator.isPassword("#password", 8),
   ],
@@ -180,7 +181,27 @@ Validator({
   rules: [
     Validator.isRequired("#fullName"),
     Validator.isRequired("#email"),
+    Validator.isEmail("#email"),
     Validator.isRequired("#password"),
     Validator.isPassword("#password", 8),
+  ],
+});
+
+Validator({
+  form: "#form-forgot-password",
+  rules: [Validator.isRequired("#email"), Validator.isEmail("#email")],
+});
+
+Validator({
+  form: "#form-otp",
+  rules: [Validator.isRequired("#otp")],
+});
+
+Validator({
+  form: "#form-reset-password",
+  rules: [
+    Validator.isRequired("#password"),
+    Validator.isPassword("#password", 8),
+    Validator.isConfirmed("#confirmPassword", "#password"),
   ],
 });

@@ -1,0 +1,31 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug 
+
+block main 
+
+    +alertError("3000")
+    +alertSuccess("3000")
+    
+    form(
+            action=`/auth/otp`
+            method="POST"   
+            id="form-otp"
+            style="max-width: 400px; width: 100%; height: 220px;"
+            class="mx-auto mt-5"
+        ) 
+            h4.text-center.mb-3 #{pageTitle}
+            .row.form-group.d-none
+                .col-12
+                    input(class="form-control" type='email' name="email" value=email)
+                
+            .mb-1.row.form-group
+                label.col-12.col-form-label.fw-bold(for='otp') OTP
+                .col-12
+                    input(class="form-control" type='text' name="otp" id="otp" placeholder="Nhập OTP")
+                p.error-msg
+
+            .mb-1.row.px-2
+                .col-12.col-form-label
+                button(type="submit" class="btn btn-primary" style="width: 100%;") Xác nhận
+    
+    script(src="/clients/js/validator.js") 
