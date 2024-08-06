@@ -8,6 +8,7 @@ const usersSchema = new mongoose.Schema(
     fullName: String,
     password: String,
     tokenUser: String,
+    favouriteSongs: [],
     status: {
       type: String,
       default: "active",

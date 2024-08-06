@@ -1,0 +1,77 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/carousel.pug 
+include ../../mixins/item.pug 
+include ../../mixins/pagination.pug 
+
+block main 
+    .container 
+        +alertSuccess(3000)    
+
+        h5(style="color: #0056d6").text-center.mb-4=pageTitle
+
+        .row 
+            .col-md-8.col-12 
+                .song-audio
+                    .row.align-items-center
+                        .col-md-2.col-12 
+                            .inner-avatar 
+                                img(src=song.avatar, alt=song.avatar)
+                        .col-md-10.col-12 
+                            div(
+                                id="aplayer"
+                                data-song=song 
+                                data-singer=singer
+                                style="width: 100%;"
+                            )
+
+                .song-actions.mt-4
+                    .row
+                        .inner-action.inner-time.col-lg-2.col-md-4.col-6.mb-3 
+                            i.me-3.fa-regular.fa-clock 
+                            span 20/10/2023
+                        .inner-action.col-lg-2.col-md-4.col-6.mb-3 
+                            i.me-3.fa-solid.fa-microphone-lines 
+                            span #{singer.fullName}
+                        .inner-action.col-lg-2.col-md-4.col-6.mb-3 
+                            i.me-3.fa-solid.fa-music  
+                            span #{topic.title}
+                        .inner-action(
+                            button-like=song.id
+                            class=`col-lg-2 col-md-4 col-6 mb-3 inner-like ${user? song.like.includes(user.id)?"active":"" : ""}`
+                        ) 
+                            i.me-3.fa-regular.fa-thumbs-up
+                            span #{song.like.length}
+                        .inner-action.col-lg-2.col-md-4.col-6.mb-3.inner-favourite(
+                            button-favourite=song.id
+                            class=`inner-favourite ${user ? user.favouriteSongs.includes(song.id)?"active":"" : ""}`
+                        ) 
+                            i.me-3.fa-regular.fa-heart
+                            span Yêu thích
+                        .inner-action.col-lg-2.col-md-4.col-6.mb-3.inner-listen 
+                            i.me-3.fa-solid.fa-headphones
+                            span #{song.listen}
+
+                .song-description.mt-4 
+                    .card 
+                        .card-header.fw-bold Mô tả 
+                        .card-body 
+                            | !{song.description}
+
+                .song-lyrics.mt-4
+                    .card 
+                        .card-header.fw-bold Lời bài hát
+                        .card-body 
+                            | !{song.lyrics}
+
+            .col-md-4.mt-md-0.mt-4.col-12 
+                h6 Bài hát cùng chủ đề
+                .mt-4
+                    each song in relatedSongs
+                        +related-song-item(song)
+
+
+    
+    script(src="/clients/js/pagination.js") 
+

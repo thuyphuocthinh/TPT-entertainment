@@ -1,5 +1,5 @@
 mixin topic-item(topic)
-    a(href=`${prefixAdmin}/topic/${topic.slug}` class="d-block") 
+    a(href=`/topic/${topic.slug}` class="d-block") 
         .item.topic-item 
             .item-img 
                 img(src=topic.avatar, alt=topic.title, class="d-block")
@@ -8,10 +8,20 @@ mixin topic-item(topic)
 
 
 mixin song-item(song)
-    a(href=`${prefixAdmin}/songs/${song.slug}` class="d-block") 
+    a(href=`/songs/detail/${song.slug}` class="d-block") 
         .item.song-item 
             .item-img 
-                img(src=song.avatar, alt=song.title, class="d-block")
+                img(src=song.avatar, alt=song.title, class="d-block", style="width: 100%;")
+            .item-info 
+                h6 #{song.title}
+                if(song.infoSinger)
+                    p=song.infoSinger.fullName
+
+mixin related-song-item(song)
+    a(href=`/songs/detail/${song.slug}` class="d-block related-song-link") 
+        .item.related-song-item
+            .item-img 
+                img(src=song.avatar, alt=song.title, class="d-block", style="width: 100%;")
             .item-info 
                 h6 #{song.title}
                 if(song.infoSinger)
