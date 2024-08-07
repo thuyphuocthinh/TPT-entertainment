@@ -23,13 +23,13 @@ nav.navbar
 
                 ul.navbar-list  
                     li.navbar-item 
-                        a(href="/songs" class="navbar-link") Bài hát
+                        a(href="/songs" class=`navbar-link ${originalUrl.includes("songs")?"active":""}`) Bài hát
                     li.navbar-item  
-                        a(href="/topics" class="navbar-link") Chủ đề 
+                        a(href="/topics" class=`navbar-link ${originalUrl.includes("topics")?"active":""}`) Chủ đề 
                     li.navbar-item
-                        a(href="/singers" class="navbar-link") Ca sĩ  
+                        a(href="/singers" class=`navbar-link ${originalUrl.includes("singers")?"active":""}`) Ca sĩ  
                     li.navbar-item
-                        a(href="#" class="navbar-link") Bảng xếp hạng  
+                        a(href="/ranking" class=`navbar-link ${originalUrl.includes("ranking")?"active":""}`) Bảng xếp hạng  
 
             #offcanvasNavbar.offcanvas.offcanvas-end(
                 tabindex='-1' 
@@ -72,7 +72,7 @@ nav.navbar
                     .search-suggest
 
                 if(user)    
-                    a(href=`/users/${user.id}` class="me-4") 
+                    a(href=`/users/profile` class="me-4") 
                         i.fa-solid.fa-user
                         span.ms-2 #{user.fullName}
                     a(href="/auth/logout" class="btn btn-secondary") Đăng xuất 

@@ -3,14 +3,10 @@ import * as controller from "../../controllers/clients/users.controller";
 
 const router: Router = Router();
 
-router.get("/login", controller.getLogin);
-router.post("/login", controller.postLogin);
-router.get("/register", controller.getRegister);
-router.post("/register", controller.postRegister);
-router.get("/logout", controller.logout);
-router.get("/forgotPassword", controller.getForgotPassword);
-router.post("/forgotPassword", controller.postForgotPassword);
-router.post("/otp", controller.postOtp);
-router.post("/resetPassword", controller.postResetPassword);
+router.get("/profile", controller.profile);
+router.patch("/profile", controller.updateProfile);
+router.get("/updatePassword", controller.getUpdatePassword);
+router.patch("/updatePassword", controller.updatePassword);
+router.get("/favouriteSongs", controller.favouriteSongs);
 
 export const usersRoutes: Router = router;

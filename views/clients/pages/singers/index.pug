@@ -1,0 +1,23 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug 
+include ../../mixins/item.pug 
+include ../../mixins/pagination.pug 
+
+block main 
+    .container 
+        .row
+            +box-head(pageTitle)
+
+        .row 
+            if(singers.length > 0)
+                each singer in singers
+                    .col-lg-3.col-md-6.col-12 
+                        +singer-item(singer)
+
+                .mt-4.d-flex.justify-content-center                            
+                    +pagination(pagination)
+            else  
+                p Không có ca sĩ nào
+    
+    script(src="/clients/js/pagination.js") 
+

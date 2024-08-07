@@ -60,6 +60,32 @@ $("#songs-carousel").owlCarousel({
     },
   },
 });
+
+$("#singers-carousel").owlCarousel({
+  loop: true,
+  margin: 10,
+  responsiveClass: true,
+  autoplay: true,
+  loop: true,
+  responsive: {
+    0: {
+      items: 1,
+      nav: true,
+      dots: false,
+    },
+    600: {
+      items: 3,
+      nav: true,
+      dots: false,
+    },
+    1000: {
+      items: 5,
+      nav: true,
+      loop: false,
+      dots: false,
+    },
+  },
+});
 // end carousel
 
 // search

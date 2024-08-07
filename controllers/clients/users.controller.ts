@@ -7,6 +7,8 @@ import md5 from "md5";
 import Users from "../../models/users.model";
 import ForgotPassword from "../../models/forgot-password.model";
 import { sendMail } from "../../helpers/sendMail.helper";
+import Songs from "../../models/songs.model";
+import Singers from "../../models/singers.model";
 
 export const getLogin = async (req: Request, res: Response) => {
   try {
@@ -228,6 +230,108 @@ export const postResetPassword = async (req: Request, res: Response) => {
       req.flash("success", "Lấy lại mật khẩu thành công");
       res.redirect("/auth/login");
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const profile = async (req: Request, res: Response) => {
+  try {
+    const tokenUser: string = req.cookies.tokenUser;
+    const user = await Users.findOne({
+      tokenUser: tokenUser,
+      deleted: false,
+      status: "active",
+    });
+    res.render("clients/pages/users/index", {
+      pageTitle: "Tài khoản",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateProfile = async (req: Request, res: Response) => {
+  try {
+    const fullName: string = req.body.fullName;
+    await Users.updateOne(
+      {
+        tokenUser: req.cookies.tokenUser,
+      },
+      {
+        fullName: fullName,
+      }
+    );
+    req.flash("success", "Cập nhật thành công");
+    res.redirect("back");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUpdatePassword = async (req: Request, res: Response) => {
+  try {
+    res.render("clients/pages/users/updatePassword", {
+      pageTitle: "Đổi mật khẩu",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePassword = async (req: Request, res: Response) => {
+  try {
+    const { password, confirmPassword } = req.body;
+
+    if (password !== confirmPassword) {
+      req.flash("error", "Mật khẩu không khớp");
+      res.redirect("back");
+      return;
+    }
+
+    await Users.updateOne(
+      {
+        tokenUser: req.cookies.tokenUser,
+      },
+      {
+        password: md5(password),
+      }
+    );
+
+    req.flash("success", "Cập nhật thành công");
+    res.redirect("back");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const favouriteSongs = async (req: Request, res: Response) => {
+  try {
+    const user = await Users.findOne({
+      tokenUser: req.cookies.tokenUser,
+      deleted: false,
+    });
+    const favouriteSongs = user.favouriteSongs;
+    const songs = await Songs.find({
+      _id: { $in: favouriteSongs },
+      deleted: false,
+      status: "active",
+    });
+    const singers = [];
+    for (const song of songs) {
+      const singer = await Singers.findOne({
+        _id: song.singerId,
+        deleted: false,
+        status: "active",
+      });
+      singers.push(singer?.fullName || "Artist");
+    }
+    res.render("clients/pages/users/favouriteSongs", {
+      pageTitle: "Bài hát yêu thích",
+      songs,
+      singers,
+    });
   } catch (error) {
     console.log(error);
   }

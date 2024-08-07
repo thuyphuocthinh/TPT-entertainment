@@ -205,3 +205,17 @@ Validator({
     Validator.isConfirmed("#confirmPassword", "#password"),
   ],
 });
+
+Validator({
+  form: "#form-update-profile",
+  rules: [Validator.isRequired("#fullName")],
+});
+
+Validator({
+  form: "#form-update-password",
+  rules: [
+    Validator.isRequired("#password"),
+    Validator.isPassword("#password", 8),
+    Validator.isConfirmed("#confirmPassword", "#password"),
+  ],
+});

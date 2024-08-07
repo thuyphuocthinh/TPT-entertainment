@@ -73,6 +73,7 @@ export const detail = async (req: Request, res: Response) => {
       status: "active",
     });
     const relatedSongs = await Songs.find({
+      _id: { $ne: song.id },
       deleted: false,
       topicId: song.topicId,
       status: "active",

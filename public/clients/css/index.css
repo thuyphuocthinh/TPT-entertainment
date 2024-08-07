@@ -61,6 +61,11 @@ a {
     color: rgb(0, 128, 255);
 }
 
+.navbar-link.active {
+    color: rgb(0, 128, 255);
+    font-weight: 700;
+}
+
 .navbar-left {
     display: flex;
     align-items: center;
@@ -204,6 +209,12 @@ a {
     gap: 10px;
 }
 
+.singer-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 /* validation */
 
 .invalid {
@@ -338,4 +349,26 @@ a {
 .related-song-item .item-info h6 {
     padding: 0;
     margin: 0;
+}
+
+/* profile-sider */
+.profile__sider {
+    list-style: none;
+    background: #0056d6;
+    padding-left: 0;
+}
+
+.profile__link {
+    display: block;
+    padding: .6rem 1.5rem;
+    color: #fff;
+    transition: all .5s;
+}
+
+.profile__link.active {
+    background-color: #5291f0;
+}
+
+.profile__link:hover {
+    background-color: #5291f0;
 }

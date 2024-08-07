@@ -25,3 +25,10 @@ block main
                     each song in songs
                         +song-item(song)
 
+        .row.my-4 
+            +box-head("Ca sĩ")
+            if(singers.length > 0)
+                .owl-carousel#singers-carousel
+                    each singer in singers
+                        +singer-item(singer)
+
