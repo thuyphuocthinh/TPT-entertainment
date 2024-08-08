@@ -1,0 +1,49 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/box-head.pug 
+
+block main 
+    +alertSuccess("3000")
+    .container 
+        .row 
+            .col-md-3.col-12
+                include ../../partials/profile-sider.pug
+            
+            .col-md-9.col-12 
+                form(
+                    action="/users/playlists/create"
+                    method="post"
+                    id="form-create-playlist"
+                    style="width: 80%;"
+                    class="mx-auto"
+                ) 
+                    h5(
+                        style="color: rgb(13,110,253);"
+                    ) #{pageTitle}
+
+                    .mb-1.row.form-group
+                        label.col-12.col-form-label.fw-bold(for='title') Tên
+                        .col-12
+                            input(
+                                class="form-control" 
+                                type='text' 
+                                name="title" 
+                                id="title" 
+                                placeholder="Nhập tên playlist"
+                            )
+                            p.error-msg
+                            
+                    .mb-1.row.form-group
+                        label.col-12.col-form-label.fw-bold Danh sách bài hát
+                        .col-12
+                            each song in songs 
+                                .form-group.mb-3
+                                    input(type="checkbox", class="form-check-input me-3" ,name="songs", id=song.id, value=song.id)
+                                    label(for=song.id) #{song.title}
+                    
+                    .row.mt-3.form-group.px-2 
+                        button.btn.btn-primary(type='submit' style="width: 100px;") Tạo mới
+
+                    
+    script(src="/clients/js/validator.js")
+                    

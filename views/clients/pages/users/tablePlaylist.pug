@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/box-head.pug 
+include ../../mixins/modal.pug 
+
+block main 
+    +alertSuccess("3000")
+    .container 
+        .row 
+            .col-md-3.col-12
+                include ../../partials/profile-sider.pug
+            
+            .col-md-9.col-12 
+                h5(
+                    style="color: rgb(13,110,253);"
+                    class="p-0 m-0"
+                ) #{pageTitle}
+
+                if(songs.length > 0)
+                    table.mt-4.table.table-hover
+                        thead
+                            tr.text-center
+                                th(scope='col') STT
+                                th(scope='col') Tên bài hát
+                                th(scope='col') Ca sĩ
+                                th(scope='col') Actions
+                        
+                        tbody
+                            each song, index in songs
+                                tr.text-center.align-middle    
+                                    td #{index + 1}
+                                    td.fw-bold  #{song.title}
+                                    td #{song.infoSinger.fullName}
+                                    td 
+                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${song.slug}`) Xóa
+                                    +modal(song.slug, song.id, song.title, "bài hát", `/users/playlists/${playlist.id}`)
+                else 
+                    p Chưa có bài hát nào

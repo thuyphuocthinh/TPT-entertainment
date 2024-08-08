@@ -14,10 +14,10 @@ export const userMiddleware = async (
         deleted: false,
       }).select("-password");
       if (user) {
-        res.locals.originalUrl = req.originalUrl;
         res.locals.user = user;
       }
     }
+    res.locals.originalUrl = req.originalUrl;
     next();
   } catch (error) {
     console.log(error);

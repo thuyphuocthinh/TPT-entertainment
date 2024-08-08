@@ -9,6 +9,7 @@ import ForgotPassword from "../../models/forgot-password.model";
 import { sendMail } from "../../helpers/sendMail.helper";
 import Songs from "../../models/songs.model";
 import Singers from "../../models/singers.model";
+import Playlists from "../../models/playlists.model";
 
 export const getLogin = async (req: Request, res: Response) => {
   try {
@@ -332,6 +333,172 @@ export const favouriteSongs = async (req: Request, res: Response) => {
       songs,
       singers,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPlaylists = async (req: Request, res: Response) => {
+  try {
+    const playlists = await Playlists.find({ deleted: false });
+    res.render("clients/pages/users/playlists", {
+      pageTitle: "Danh sách phát",
+      playlists,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCreatePlaylists = async (req: Request, res: Response) => {
+  try {
+    const songs = await Songs.find({
+      deleted: false,
+      status: "active",
+    });
+    for (const song of songs) {
+      const singer = await Singers.findOne({
+        _id: song.singerId,
+        deleted: false,
+      }).select("fullName");
+      song["infoSinger"] = singer;
+    }
+    res.render("clients/pages/users/createPlaylist", {
+      pageTitle: "Thêm mới playlist",
+      songs,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postCreatePlaylists = async (req: Request, res: Response) => {
+  try {
+    const { title, songs } = req.body;
+    const user = await Users.findOne({ tokenUser: req.cookies.tokenUser });
+    const data = {
+      title,
+      songs,
+      userId: user.id,
+    };
+    const record = new Playlists(data);
+    await record.save();
+    req.flash("success", "Thêm mới danh sách phát thành công");
+    res.redirect("/users/playlists");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const detailPlaylist = async (req: Request, res: Response) => {
+  try {
+    const slug: string = req.params.slug;
+    const playlist = await Playlists.findOne({ slug: slug });
+    const songs = await Songs.find({
+      _id: { $in: playlist.songs },
+      deleted: false,
+      status: "active",
+    });
+    const singers = [];
+    for (const song of songs) {
+      const singer = await Singers.findOne({
+        _id: song.singerId,
+        deleted: false,
+        status: "active",
+      });
+      singers.push(singer?.fullName || "Artist");
+    }
+    res.render("clients/pages/users/detailPlaylist", {
+      pageTitle: playlist.title,
+      songs,
+      singers,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deletePlaylist = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    await Playlists.updateOne(
+      {
+        _id: id,
+      },
+      {
+        deleted: true,
+      }
+    );
+    req.flash("success", "Xóa thành công");
+    res.redirect("back");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addSongToPlaylist = async (req: Request, res: Response) => {
+  try {
+    const { playlistId, songId } = req.body;
+    await Playlists.updateOne(
+      {
+        _id: playlistId,
+      },
+      {
+        $push: { songs: songId },
+      }
+    );
+    req.flash("success", "Đã thêm vào playlist");
+    res.redirect("back");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getTablePlaylist = async (req: Request, res: Response) => {
+  try {
+    const slug: string = req.params.slug;
+    const playlist = await Playlists.findOne({
+      slug: slug,
+      deleted: false,
+    });
+    const songs = await Songs.find({
+      _id: { $in: playlist.songs },
+      deleted: false,
+      status: "active",
+    });
+
+    for (const song of songs) {
+      const singer = await Singers.findOne({
+        _id: song.singerId,
+        deleted: false,
+      }).select("fullName");
+      song["infoSinger"] = singer;
+    }
+    res.render("clients/pages/users/tablePlaylist", {
+      pageTitle: playlist.title,
+      songs,
+      playlist,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteSong = async (req: Request, res: Response) => {
+  try {
+    const songId: string = req.params.songId;
+    const playlistId: string = req.params.playlistId;
+
+    await Playlists.updateOne(
+      {
+        _id: playlistId,
+      },
+      {
+        $pull: { songs: songId },
+      }
+    );
+    req.flash("success", "Xóa thành công");
+    res.redirect("back");
   } catch (error) {
     console.log(error);
   }

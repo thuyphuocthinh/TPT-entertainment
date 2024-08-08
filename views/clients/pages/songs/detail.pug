@@ -4,6 +4,7 @@ include ../../mixins/alert.pug
 include ../../mixins/carousel.pug 
 include ../../mixins/item.pug 
 include ../../mixins/pagination.pug 
+include ../../mixins/modal.pug 
 
 block main 
     .container 
@@ -26,32 +27,34 @@ block main
                                 style="width: 100%;"
                             )
 
-                .song-actions.mt-4
-                    .row
-                        .inner-action.inner-time.col-lg-2.col-md-4.col-6.mb-3 
-                            i.me-3.fa-regular.fa-clock 
+                .song-actions.mt-4.flex-md-row.flex-column.d-flex.align-items-center.justify-content-between
+                    .song-actions-left.d-flex
+                        .inner-action.inner-time.mb-3.me-4
+                            i.me-2.fa-regular.fa-clock 
                             span 20/10/2023
-                        .inner-action.col-lg-2.col-md-4.col-6.mb-3 
-                            i.me-3.fa-solid.fa-microphone-lines 
+                        .inner-action.mb-3.me-4 
+                            i.me-2.fa-solid.fa-microphone-lines 
                             span #{singer.fullName}
-                        .inner-action.col-lg-2.col-md-4.col-6.mb-3 
-                            i.me-3.fa-solid.fa-music  
+                        .inner-action.mb-3
+                            i.me-2.fa-solid.fa-music  
                             span #{topic.title}
+                    
+                    .song-actions-right.d-flex
                         .inner-action(
                             button-like=song.id
-                            class=`col-lg-2 col-md-4 col-6 mb-3 inner-like ${user? song.like.includes(user.id)?"active":"" : ""}`
+                            class= `mb-3 inner-like ${user? song.like.includes(user.id)?"active":"" : ""}`
                         ) 
                             i.me-3.fa-regular.fa-thumbs-up
-                            span #{song.like.length}
-                        .inner-action.col-lg-2.col-md-4.col-6.mb-3.inner-favourite(
+                        .inner-action.mb-3.inner-favourite(
                             button-favourite=song.id
                             class=`inner-favourite ${user ? user.favouriteSongs.includes(song.id)?"active":"" : ""}`
                         ) 
                             i.me-3.fa-regular.fa-heart
-                            span Yêu thích
-                        .inner-action.col-lg-2.col-md-4.col-6.mb-3.inner-listen 
-                            i.me-3.fa-solid.fa-headphones
-                            span #{song.listen}
+                        .inner-action.mb-3.inner-playlist(
+                            data-bs-toggle="modal" data-bs-target=`#${song.slug}`
+                        ) 
+                            i.fa-solid.fa-list.me-2
+                        +modal-playlist(song.slug, song.id, "/users/playlists", playlists)
 
                 .song-description.mt-4 
                     .card 

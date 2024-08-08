@@ -18,7 +18,7 @@ const clientsRoutes = (app: Express) => {
   app.use("/topics", userMiddlewares.userMiddleware, topicsRoutes);
   app.use("/ranking", userMiddlewares.userMiddleware, rankingRoutes);
   app.use("/users", userMiddlewares.userMiddleware, usersRoutes);
-  app.use("/auth", authRoutes);
+  app.use("/auth", userMiddlewares.userMiddleware, authRoutes);
 };
 
 export default clientsRoutes;

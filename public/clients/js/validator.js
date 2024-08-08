@@ -219,3 +219,8 @@ Validator({
     Validator.isConfirmed("#confirmPassword", "#password"),
   ],
 });
+
+Validator({
+  form: "#form-create-playlist",
+  rules: [Validator.isRequired("#title")],
+});

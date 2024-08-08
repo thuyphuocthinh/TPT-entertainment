@@ -5,6 +5,7 @@ import { Pagination } from "../../interfaces/system.interface";
 import { pagination } from "../../helpers/pagination.helper";
 import Topics from "../../models/topics.model";
 import Users from "../../models/users.model";
+import Playlists from "../../models/playlists.model";
 
 export const index = async (req: Request, res: Response) => {
   try {
@@ -88,12 +89,18 @@ export const detail = async (req: Request, res: Response) => {
       song["infoSinger"] = singer;
     }
     const pageTitle = song.title + " - " + singer.fullName;
+    const playlists = await Playlists.find({
+      deleted: false,
+      songs: { $nin: [song.id] },
+    });
+
     res.render("clients/pages/songs/detail", {
       pageTitle: pageTitle,
       song,
       singer,
       topic,
       relatedSongs,
+      playlists,
     });
   } catch (error) {
     console.log(error);

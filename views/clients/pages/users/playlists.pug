@@ -1,0 +1,49 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/box-head.pug 
+include ../../mixins/modal.pug 
+
+block main 
+    +alertSuccess("3000")
+    .container 
+        .row 
+            .col-md-3.col-12
+                include ../../partials/profile-sider.pug
+            
+            .col-md-9.col-12 
+                .d-flex.align-items-center.justify-content-between
+                    h5(
+                        style="color: rgb(13,110,253);"
+                        class="p-0 m-0"
+                    ) #{pageTitle}
+
+                    a(href="/users/playlists/create" class="btn btn-primary") 
+                        i.me-2.fa-solid.fa-plus
+                        span Tạo mới 
+
+                if(playlists.length > 0)
+                    table.mt-4.table.table-hover
+                        thead
+                            tr.text-center
+                                th(scope='col') STT
+                                th(scope='col') Tên 
+                                th(scope='col') Số bài hát 
+                                th(scope='col') Actions
+                        
+                        tbody
+                            each playlist, index in playlists 
+                                tr.text-center.align-middle    
+                                    td #{index + 1}
+                                    td.fw-bold  #{playlist.title}
+                                    td #{playlist.songs.length}
+                                    td 
+                                        a(href=`/users/playlists/${playlist.slug}` class="me-2 btn btn-success") Nghe 
+                                        a(href=`/users/playlists/table/${playlist.slug}` class="me-2 btn btn-warning") Chi tiết 
+                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${playlist.slug}`) Xóa
+                                    +modal(playlist.slug, playlist.id, playlist.title, "playlist", "/users/playlists")
+                else 
+                    p Chưa có danh sách phát nào
+
+                    
+    script(src="/clients/js/validator.js")
+                    

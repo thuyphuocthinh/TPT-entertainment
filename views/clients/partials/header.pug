@@ -23,13 +23,13 @@ nav.navbar
 
                 ul.navbar-list  
                     li.navbar-item 
-                        a(href="/songs" class=`navbar-link ${originalUrl.includes("songs")?"active":""}`) Bài hát
+                        a(href="/songs" class=`navbar-link ${originalUrl ? originalUrl.includes("songs")?"active":"" : ""}`) Bài hát
                     li.navbar-item  
-                        a(href="/topics" class=`navbar-link ${originalUrl.includes("topics")?"active":""}`) Chủ đề 
+                        a(href="/topics" class=`navbar-link ${originalUrl ? originalUrl.includes("topics")?"active":"" : ""}`) Chủ đề 
                     li.navbar-item
-                        a(href="/singers" class=`navbar-link ${originalUrl.includes("singers")?"active":""}`) Ca sĩ  
+                        a(href="/singers" class=`navbar-link ${originalUrl ? originalUrl.includes("singers")?"active":"" : ""}`) Ca sĩ  
                     li.navbar-item
-                        a(href="/ranking" class=`navbar-link ${originalUrl.includes("ranking")?"active":""}`) Bảng xếp hạng  
+                        a(href="/ranking" class=`navbar-link ${originalUrl ? originalUrl.includes("ranking")?"active":"" : ""}`) Bảng xếp hạng  
 
             #offcanvasNavbar.offcanvas.offcanvas-end(
                 tabindex='-1' 
