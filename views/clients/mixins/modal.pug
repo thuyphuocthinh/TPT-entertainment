@@ -39,21 +39,24 @@ mixin modal-playlist(slug, id, route, playlists)
                         span Thêm vào danh sách phát
                     button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
                 .modal-body
-                    form(
-                        action=`/users/playlists/add`
-                        method="POST"
-                    ) 
-                        input(type="text", name="songId", value=id, style="display: none;")
-                        select(name="playlistId" class="form-select") 
-                            each playlist in playlists 
-                                option(value=playlist.id) #{playlist.title} 
-                        .d-flex.justify-content-end
-                            button(
-                                type="submit"
-                                href=`${route}/add/${id}`
-                                class="btn btn-primary mt-3"
-                                data-bs-dismiss="modal"
-                            ) Thêm
+                    if(playlists.length > 0)
+                        form(
+                            action=`/users/playlists/add`
+                            method="POST"
+                        ) 
+                            input(type="text", name="songId", value=id, style="display: none;")
+                            select(name="playlistId" class="form-select") 
+                                each playlist in playlists 
+                                    option(value=playlist.id) #{playlist.title} 
+                            .d-flex.justify-content-end
+                                button(
+                                    type="submit"
+                                    href=`${route}/add/${id}`
+                                    class="btn btn-primary mt-3"
+                                    data-bs-dismiss="modal"
+                                ) Thêm
+                    else 
+                        p.text-center Hiện tại không có playlist nào!
 
                 .modal-footer
                     button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Hủy

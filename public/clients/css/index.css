@@ -303,7 +303,8 @@ a {
 
 .inner-like,
 .inner-favourite,
-.inner-playlist {
+.inner-playlist,
+.inner-download {
     cursor: pointer;
 }
 

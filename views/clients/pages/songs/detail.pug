@@ -40,21 +40,31 @@ block main
                             span #{topic.title}
                     
                     .song-actions-right.d-flex
+                        .inner-action.me-3.inner-download(
+                            button-download=song.audio
+                            button-title=song.title
+                        ) 
+                            i.fa-solid.fa-download 
+                            
                         .inner-action(
                             button-like=song.id
+                            title="Like"
                             class= `mb-3 inner-like ${user? song.like.includes(user.id)?"active":"" : ""}`
                         ) 
                             i.me-3.fa-regular.fa-thumbs-up
                         .inner-action.mb-3.inner-favourite(
                             button-favourite=song.id
+                            title="Thêm vào danh sách bài hát yêu thích"
                             class=`inner-favourite ${user ? user.favouriteSongs.includes(song.id)?"active":"" : ""}`
                         ) 
                             i.me-3.fa-regular.fa-heart
-                        .inner-action.mb-3.inner-playlist(
-                            data-bs-toggle="modal" data-bs-target=`#${song.slug}`
-                        ) 
-                            i.fa-solid.fa-list.me-2
-                        +modal-playlist(song.slug, song.id, "/users/playlists", playlists)
+                        if(user) 
+                            .inner-action.mb-3.inner-playlist(
+                                title="Thêm vào playlists"
+                                data-bs-toggle="modal" data-bs-target=`#${song.slug}`
+                            ) 
+                                i.fa-solid.fa-list.me-2
+                            +modal-playlist(song.slug, song.id, "/users/playlists", playlists)
 
                 .song-description.mt-4 
                     .card 
@@ -77,4 +87,5 @@ block main
 
     
     script(src="/clients/js/pagination.js") 
+    script(src="/clients/js/download.js") 
 

@@ -112,3 +112,5 @@ if (listButtonFavourite.length > 0) {
     });
   });
 }
+
+// handle playlist 

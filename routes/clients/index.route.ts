@@ -7,8 +7,10 @@ import { singersRoutes } from "./singers.route";
 import { songsRoutes } from "./songs.route";
 import { topicsRoutes } from "./topics.route";
 import { rankingRoutes } from "./ranking.route";
+import { downloadRoutes } from "./download.route";
 // middleware
 import * as userMiddlewares from "../../middlewares/clients/userMiddleware.middleware";
+import * as authMiddlewares from "../../middlewares/clients/authMiddleware.middleware";
 
 const clientsRoutes = (app: Express) => {
   app.use("/", userMiddlewares.userMiddleware, homepageRoutes);
@@ -17,7 +19,13 @@ const clientsRoutes = (app: Express) => {
   app.use("/singers", userMiddlewares.userMiddleware, singersRoutes);
   app.use("/topics", userMiddlewares.userMiddleware, topicsRoutes);
   app.use("/ranking", userMiddlewares.userMiddleware, rankingRoutes);
-  app.use("/users", userMiddlewares.userMiddleware, usersRoutes);
+  app.use(
+    "/users",
+    authMiddlewares.requireAuth,
+    userMiddlewares.userMiddleware,
+    usersRoutes
+  );
+  app.use("/download", downloadRoutes);
   app.use("/auth", userMiddlewares.userMiddleware, authRoutes);
 };
 
