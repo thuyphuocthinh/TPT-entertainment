@@ -7,7 +7,6 @@ import { singersRoutes } from "./singers.route";
 import { songsRoutes } from "./songs.route";
 import { topicsRoutes } from "./topics.route";
 import { rankingRoutes } from "./ranking.route";
-import { downloadRoutes } from "./download.route";
 // middleware
 import * as userMiddlewares from "../../middlewares/clients/userMiddleware.middleware";
 import * as authMiddlewares from "../../middlewares/clients/authMiddleware.middleware";
@@ -21,11 +20,10 @@ const clientsRoutes = (app: Express) => {
   app.use("/ranking", userMiddlewares.userMiddleware, rankingRoutes);
   app.use(
     "/users",
-    authMiddlewares.requireAuth,
+    authMiddlewares.requireAuthNoAuthorization,
     userMiddlewares.userMiddleware,
     usersRoutes
   );
-  app.use("/download", downloadRoutes);
   app.use("/auth", userMiddlewares.userMiddleware, authRoutes);
 };
 

@@ -32,3 +32,30 @@ export const requireAuth = async (
     console.log(error);
   }
 };
+
+export const requireAuthNoAuthorization = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    if (req.cookies.tokenUser) {
+      const tokenUser = req.cookies.tokenUser;
+      const user = await Users.findOne({
+        tokenUser: tokenUser,
+        deleted: false,
+      }).select("-password");
+      if (user) {
+        next();
+      } else {
+        res.redirect("/auth/login");
+        return;
+      }
+    } else {
+      res.redirect("/auth/login");
+      return;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
