@@ -51,7 +51,7 @@ app.use((0, express_session_1.default)({
 app.use((0, express_flash_1.default)());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, method_override_1.default)("_method"));
-app.set("views", "./views/");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 app.use("/tinymce", express_1.default.static(path_1.default.join(__dirname, "node_modules", "tinymce")));
 app.locals.prefixAdmin = system_config_1.systemConfig.prefixAdmin;

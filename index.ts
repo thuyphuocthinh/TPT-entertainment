@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 // views
-app.set("views", "./views/");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 // tinymce
