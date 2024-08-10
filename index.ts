@@ -20,7 +20,7 @@ dotenv.config();
 database.connect();
 
 // public files
-app.use(express.static("public"));
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 // flash
 app.use(cookieParser("TPT"));

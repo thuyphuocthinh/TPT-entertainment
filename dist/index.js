@@ -40,7 +40,7 @@ const index_route_2 = __importDefault(require("./routes/clients/index.route"));
 const app = (0, express_1.default)();
 dotenv_1.default.config();
 database.connect();
-app.use(express_1.default.static("public"));
+app.use("/public", express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use((0, cookie_parser_1.default)("TPT"));
 app.use((0, express_session_1.default)({
     secret: "TPT",
