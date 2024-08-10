@@ -1,4 +1,4 @@
-import { Express } from "express";
+import { Express, Request, Response } from "express";
 import { systemConfig } from "./config/system.config";
 import * as database from "./config/database.config";
 import express from "express";
@@ -56,6 +56,9 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // routes
 adminRoutes(app);
 clientsRoutes(app);
+app.use("*", (req: Request, res: Response) => {
+  res.render("not-found.pug");
+});
 
 // port
 const port: number | string = process.env.PORT;

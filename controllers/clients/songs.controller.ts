@@ -78,7 +78,7 @@ export const detail = async (req: Request, res: Response) => {
       deleted: false,
       topicId: song.topicId,
       status: "active",
-    });
+    }).limit(10);
     for (const song of relatedSongs) {
       if (song.title.length > 30)
         song.title = song.title.substring(0, 20) + "...";

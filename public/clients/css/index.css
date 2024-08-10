@@ -284,7 +284,7 @@ a {
 .inner-avatar>img {
     border-radius: 50%;
     width: 100%;
-    border: 2px solid #0056d6;
+    border: 5px solid #0056d6;
     animation: rotate 5s linear infinite;
     animation-play-state: paused;
 }

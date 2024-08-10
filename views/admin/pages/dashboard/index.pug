@@ -12,67 +12,70 @@ block main
             +alertSuccess(3000)
             .row.mt-4 
                 .col-md-6.col-12.mb-4 
-                        .card 
-                            .card-header.fw-bold Ca sĩ
-                            .card-body 
-                                p.d-flex.align-items-center.justify-content-between 
-                                    span.fw-bold Tổng
-                                    span 0
-                                p.d-flex.align-items-center.justify-content-between 
-                                    span.fw-bold Đã duyệt
-                                    span 0
-                                p.d-flex.align-items-center.justify-content-between 
-                                    span.fw-bold Chưa duyệt
-                                    span 0  
+                    .card 
+                        .card-header.fw-bold Ca sĩ
+                        .card-body 
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Tổng
+                                span #{statistic.singers.total}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Active
+                                span #{statistic.singers.active}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Inactive
+                                span #{statistic.singers.inactive} 
                 .col-md-6.col-12.mb-4 
                     .card 
                         .card-header.fw-bold Bài hát
                         .card-body 
                             p.d-flex.align-items-center.justify-content-between 
                                 span.fw-bold Tổng
-                                span 0
+                                span #{statistic.songs.total}
                             p.d-flex.align-items-center.justify-content-between 
-                                span.fw-bold Đã duyệt
-                                span 0
+                                span.fw-bold Active
+                                span #{statistic.songs.active}
                             p.d-flex.align-items-center.justify-content-between 
-                                span.fw-bold Chưa duyệt
-                                span 0
+                                span.fw-bold Inactive
+                                span #{statistic.songs.inactive} 
+
                 .col-md-6.col-12.mb-4 
                     .card 
                         .card-header.fw-bold Chủ đề bài hát
                         .card-body 
                             p.d-flex.align-items-center.justify-content-between 
                                 span.fw-bold Tổng
-                                span 0
+                                span #{statistic.topics.total}
                             p.d-flex.align-items-center.justify-content-between 
-                                span.fw-bold Đã duyệt
-                                span 0
+                                span.fw-bold Active
+                                span #{statistic.topics.active}
                             p.d-flex.align-items-center.justify-content-between 
-                                span.fw-bold Chưa duyệt
-                                span 0
+                                span.fw-bold Inactive
+                                span #{statistic.topics.inactive} 
+
                 .col-md-6.col-12.mb-4 
                     .card 
                         .card-header.fw-bold Tài khoản admin 
                         .card-body 
                             p.d-flex.align-items-center.justify-content-between 
                                 span.fw-bold Tổng
-                                span 0
+                                span #{statistic.accounts.total}
                             p.d-flex.align-items-center.justify-content-between 
-                                span.fw-bold Đã duyệt
-                                span 0
+                                span.fw-bold Active
+                                span #{statistic.accounts.active}
                             p.d-flex.align-items-center.justify-content-between 
-                                span.fw-bold Chưa duyệt
-                                span 0
+                                span.fw-bold Inactive
+                                span #{statistic.accounts.inactive} 
+
                 .col-md-6.col-12.mb-4 
                     .card 
                         .card-header.fw-bold Lượng người dùng
                         .card-body 
                             p.d-flex.align-items-center.justify-content-between 
                                 span.fw-bold Tổng
-                                span 0
+                                span #{statistic.users.total}
                             p.d-flex.align-items-center.justify-content-between 
-                                span.fw-bold Đã duyệt
-                                span 0
+                                span.fw-bold Active
+                                span #{statistic.users.active}
                             p.d-flex.align-items-center.justify-content-between 
-                                span.fw-bold Chưa duyệt
-                                span 0
+                                span.fw-bold Inactive
+                                span #{statistic.users.inactive}
