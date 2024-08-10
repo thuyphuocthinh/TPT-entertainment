@@ -7,7 +7,7 @@ import Singers from "../../models/singers.model";
 export const index = async (req: Request, res: Response) => {
   try {
     const carousels = await Carousels.find({ deleted: false });
-    const topics = await Topics.find({ deleted: false });
+    const topics = await Topics.find({ deleted: false, status: "active" });
     const songs = await Songs.find({ deleted: false, status: "active" });
     for (const song of songs) {
       if (song.title.length > 30)

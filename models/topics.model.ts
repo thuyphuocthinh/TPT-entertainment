@@ -7,7 +7,10 @@ const topicsSchema = new mongoose.Schema(
     title: String,
     description: String,
     avatar: String,
-    status: String,
+    status: {
+      type: String,
+      default: "active",
+    },
     slug: {
       type: String,
       slug: "title",
