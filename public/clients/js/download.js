@@ -21,7 +21,6 @@ if (btnDownload) {
 function downloadBlob(blob, filename) {
   // Create an object URL for the blob object
   const url = URL.createObjectURL(blob);
-  console.log(url);
 
   // Create a new anchor element
   const a = document.createElement("a");
@@ -58,7 +57,6 @@ function readBlobFromUrl(url, title) {
       // get result
       reader.onloadend = function () {
         var base64string = reader.result;
-        console.log(base64string);
       };
       const downloadLink = downloadBlob(blob, title);
       downloadLink.innerHTML = "<i class='fa-solid fa-download'></i>";

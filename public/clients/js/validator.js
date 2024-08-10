@@ -159,7 +159,8 @@ Validator.isConfirmed = function (selector, needToConfirmSelector, message) {
   return {
     selector,
     test: function (value) {
-      return value === document.querySelector(needToConfirmSelector).value
+      return value === document.querySelector(needToConfirmSelector).value &&
+        value !== ""
         ? undefined
         : message || "Gia tri nhap vao khong khop";
     },
@@ -214,8 +215,11 @@ Validator({
 Validator({
   form: "#form-update-password",
   rules: [
+    Validator.isRequired("#oldPassword"),
     Validator.isRequired("#password"),
     Validator.isPassword("#password", 8),
+    Validator.isPassword("#oldPassword", 8),
+    Validator.isRequired("#confirmPassword"),
     Validator.isConfirmed("#confirmPassword", "#password"),
   ],
 });

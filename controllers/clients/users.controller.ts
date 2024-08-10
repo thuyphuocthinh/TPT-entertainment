@@ -283,7 +283,18 @@ export const getUpdatePassword = async (req: Request, res: Response) => {
 
 export const updatePassword = async (req: Request, res: Response) => {
   try {
-    const { password, confirmPassword } = req.body;
+    const { oldPassword, password, confirmPassword } = req.body;
+
+    const user = await Users.findOne({
+      tokenUser: req.cookies.tokenUser,
+      deleted: false,
+    });
+
+    if (user.password !== md5(oldPassword)) {
+      req.flash("error", "Mật khẩu cũ sai");
+      res.redirect("back");
+      return;
+    }
 
     if (password !== confirmPassword) {
       req.flash("error", "Mật khẩu không khớp");

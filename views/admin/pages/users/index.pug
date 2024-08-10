@@ -9,7 +9,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/modal.pug 
 
 block main
-    if (role.permissions.includes("accounts-view"))
+    if (role.permissions.includes("users-view"))
         .container 
             +box-head(pageTitle)
 
@@ -48,7 +48,7 @@ block main
                                         each user, index in users 
                                             tr.text-center.align-middle 
                                                 td 
-                                                    input(type="checkbox" name="" checkbox-single=account.id class="form-check-input")    
+                                                    input(type="checkbox" name="" checkbox-single=user.id class="form-check-input")    
                                                 td #{index + 1}
                                                 td.fw-bold #{user.fullName}
                                                 td 

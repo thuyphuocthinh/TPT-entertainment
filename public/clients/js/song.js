@@ -75,8 +75,6 @@ if (buttonLike) {
         if (data.status === 400) {
           window.location.href = "/auth/login";
         } else if (data.status === 200) {
-          const span = buttonLike.querySelector("span");
-          span.innerText = data.data;
           buttonLike.classList.toggle("active");
         }
       });
