@@ -1,0 +1,26 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug
+include ../../mixins/item.pug 
+include ../../mixins/pagination.pug 
+
+block main 
+    .container 
+        .row 
+            .col-md-3.col-12
+                include ../../partials/profile-sider.pug
+            
+            .col-md-9.col-12
+                if(songs.length > 0)
+                    h5(
+                        style="color: rgb(13,110,253);"
+                    ) #{pageTitle}
+                    div(
+                        class="mt-4"
+                        id="aplayer-list"
+                        data-songs=songs
+                        data-singers=singers
+                        style="width: 100%;"
+                    )
+                else 
+                    p Chưa có bài hát nào
+

@@ -1,0 +1,51 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/box-head.pug 
+
+block main 
+    +alertSuccess("3000")
+    .container 
+        .row 
+            .col-md-3.col-12
+                include ../../partials/profile-sider.pug
+            
+            .col-md-9.col-12
+                form(
+                    action="/users/profile?_method=PATCH"
+                    method="post"
+                    id="form-update-profile"
+                    style="width: 80%;"
+                    class="mx-auto"
+                ) 
+                    h5(
+                        style="color: rgb(13,110,253);"
+                    ) #{pageTitle}
+
+                    .mb-1.row.form-group
+                        label.col-12.col-form-label.fw-bold(for='email') Email
+                        .col-12
+                            input(class="form-control" type='email' readonly 
+                            disabled=true 
+                            value=user.email 
+                            name="email" 
+                            id="email" 
+                            placeholder="Nhập email"
+                        )
+                        p.error-msg
+
+                    .mb-1.row.form-group
+                        label.col-12.col-form-label.fw-bold(for='fullName') Họ tên
+                        .col-12
+                            input(class="form-control" type='text' 
+                            value=user.fullName 
+                            name="fullName" 
+                            id="fullName" 
+                            placeholder="Nhập họ tên"
+                        )
+                        p.error-msg
+
+                    .row.mt-3.form-group.px-2 
+                        button.btn.btn-primary(type='submit' style="width: 200px;") Lưu thay đổi
+                    
+    script(src="/clients/js/validator.js")
+                    

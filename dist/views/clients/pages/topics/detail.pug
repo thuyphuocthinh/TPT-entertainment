@@ -1,0 +1,24 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug
+include ../../mixins/item.pug 
+include ../../mixins/pagination.pug 
+
+block main 
+    .container 
+        .row
+            +box-head(pageTitle)
+
+        .row 
+            .col-md-8.col-12 
+                if(songs.length > 0)
+                    div(
+                        id="aplayer-list"
+                        data-songs=songs
+                        data-singers=singers
+                        style="width: 100%;"
+                    )
+                else 
+                    p Chưa có bài hát nào
+    
+    script(src="/clients/js/pagination.js") 
+

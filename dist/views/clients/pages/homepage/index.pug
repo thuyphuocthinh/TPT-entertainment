@@ -1,0 +1,34 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/carousel.pug 
+include ../../mixins/item.pug 
+
+block main 
+    .container 
+        +alertSuccess(3000)
+        .row.my-4   
+            .col-12 
+                +carousel(carousels) 
+
+        .row.my-4 
+            +box-head("Chủ đề")
+            if(topics.length > 0)
+                .owl-carousel#topic-carousel 
+                    each topic in topics 
+                        +topic-item(topic)
+
+        .row.my-4 
+            +box-head("Bài hát")
+            if(songs.length > 0)
+                .owl-carousel#songs-carousel
+                    each song in songs
+                        +song-item(song)
+
+        .row.my-4 
+            +box-head("Ca sĩ")
+            if(singers.length > 0)
+                .owl-carousel#singers-carousel
+                    each singer in singers
+                        +singer-item(singer)
+

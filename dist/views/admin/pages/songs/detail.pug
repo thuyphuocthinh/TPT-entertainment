@@ -1,0 +1,76 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/image-upload.pug 
+include ../../mixins/audio-upload.pug 
+include ../../mixins/alert.pug
+
+block main
+        .container 
+            +box-head(pageTitle)
+
+            .row.my-3
+                .col-md-4.col-12 
+                    .form-group     
+                        label(for="title" class="fw-bold") Tên
+                        input(type="text" name="title" readonly value=song.title id="title" class="form-control") 
+                        p.error-msg
+   
+                .col-md-4.col-12  
+                    .form-group     
+                        label(for="topic" class="fw-bold") Chủ đề
+                        input(type="text" name="title" readonly value=song.infoTopic.title id="topic" class="form-control") 
+                
+                .col-md-4.col-12  
+                    .form-group     
+                        label(for="singer" class="fw-bold") Ca sĩ
+                        input(type="text" name="title" readonly value=song.infoSinger.fullName id="singer" class="form-control") 
+            
+            .row.my-3
+                .col-6 
+                    .row
+                        .col-md-6.col-12
+                            .preview-image
+                                .image-preview-item
+                                    span(class="fw-bold d-block") Ảnh
+                                    img(
+                                        src=song.avatar 
+                                        alt=song.title 
+                                        class="my-2 img-thumbnail" 
+                                        width="200" 
+                                        height="200" 
+                                    )
+
+                .col-6 
+                    .row 
+                        .col-md-6.col-12 
+                            .preview-audio
+                                span(class="fw-bold") Audio
+                                audio(controls class="audio-preview-item")
+                                    source(src=song.audio, type="audio/mp3")     
+            
+            .row.my-3  
+                .col-12
+                    .card 
+                        .card-header.fw-bold Mô tả 
+                        .card-body !{song.description}
+            
+            .row.my-3
+                .col-12
+                    .card 
+                        .card-header.fw-bold Lyrics 
+                        .card-body !{song.lyrics}
+
+            .row.my-3 
+                .col-12
+                    .form-group 
+                        label(class="fw-bold me-3") Trạng thái 
+                        if(song.status === "active") 
+                            span.badge.bg-danger Active 
+                        else 
+                            span.badge.bg-success Inactive
+                
+
+
+
+        
+

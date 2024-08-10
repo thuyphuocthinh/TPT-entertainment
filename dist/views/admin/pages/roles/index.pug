@@ -1,0 +1,85 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/search.pug 
+include ../../mixins/changeMulti.pug 
+include ../../mixins/status.pug 
+include ../../mixins/sort.pug 
+include ../../mixins/filterByStatus.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/pagination.pug 
+include ../../mixins/modal.pug 
+
+block main
+    if (role.permissions.includes("roles-view"))
+        .container 
+            +box-head(pageTitle)
+
+            +alertSuccess("3000")
+            +alertError("3000")
+
+            .row 
+                .col-12
+                    .card 
+                        .card-header.fw-bold Tìm kiếm, sắp xếp, lọc
+                        .card-body 
+                            .row 
+                                .col-4 
+                                    +search(keyword)
+                                .col-4 
+                                    +sort(sortCriteria, sortBy)
+                                .col-4 
+                                    +filterByStatus(filterCriteria, filter)
+
+            if (role.permissions.includes("roles-edit") && role.permissions.includes("roles-create"))
+                .row.mt-4 
+                    .col-12 
+                        .card 
+                            .card-header.fw-bold Cập nhật, Thêm mới 
+                            .card-body.d-flex.justify-content-between 
+                                +changeMulti("singers")
+                                a(
+                                    href=`${prefixAdmin}/roles/create`
+                                    class="btn btn-secondary"
+                                ) 
+                                    i.fa-solid.fa-plus
+                                    span.ms-2 Thêm mới
+
+            .row.mt-4 
+                .col-12 
+                    .card 
+                        .card-header.fw-bold Danh sách 
+                        .card-body 
+                            if (roles.length > 0) 
+                                table.table.table-hover
+                                    thead
+                                        tr.text-center
+                                            th(scope='col')
+                                                input(type="checkbox" name="" checkbox-all class="form-check-input")
+                                            th(scope='col') STT
+                                            th(scope='col') Tên 
+                                            th(scope='col') Mô tả 
+                                            th(scope='col') Status 
+                                            th(scope='col') Actions
+                                    
+                                    tbody
+                                        each roleData, index in roles 
+                                            tr.text-center.align-middle 
+                                                td 
+                                                    input(type="checkbox" name="" checkbox-single=roleData.id class="form-check-input")    
+                                                td #{index + 1}
+                                                td.fw-bold #{roleData.title}
+                                                td !{roleData.description}
+                                                td 
+                                                    +status(roleData, "roles")
+                                                td 
+                                                    if (role.permissions.includes("roles-edit"))
+                                                        a(href=`${prefixAdmin}/roles/edit/${roleData.id}` class="btn btn-warning me-2") Sửa 
+                                                    if (role.permissions.includes("roles-delete")) 
+                                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${roleData.slug}`) Xóa
+                                                    +modal(roleData.slug, roleData.id, roleData.title, "vai trò", "roles")
+                
+                                +pagination(pagination)
+                            else 
+                                tr(col-span="8") Chưa có vai trò nào 
+
+        script(src="/admin/js/index.js") 

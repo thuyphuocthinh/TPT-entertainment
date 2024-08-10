@@ -1,0 +1,23 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug 
+include ../../mixins/item.pug 
+include ../../mixins/pagination.pug 
+
+block main 
+    .container 
+        .row
+            +box-head(pageTitle)
+
+        .row 
+            if(topics.length > 0)
+                each topic in topics
+                    .col-lg-3.col-md-6.col-12 
+                        +topic-item(topic)
+
+                .mt-4.d-flex.justify-content-center                            
+                    +pagination(pagination)
+            else  
+                p Không có chủ đề nào
+    
+    script(src="/clients/js/pagination.js") 
+

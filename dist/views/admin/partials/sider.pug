@@ -1,0 +1,76 @@
+.sider
+    .sider-group 
+        h6.sider-heading 
+            i.fa-solid.fa-gauge
+            span Dashboard 
+        .sider-item 
+            a(
+                href=`${prefixAdmin}/dashboard` 
+                class=`sider-link ${originalUrl.includes("dashboard") ? "active" : ""}`
+            ) Dashboard  
+    
+    .sider-group 
+        h6.sider-heading 
+            i.fa-solid.fa-gauge
+            span Quản lí bài hát  
+        .sider-item 
+            a(
+                href=`${prefixAdmin}/topics` 
+                class=`sider-link ${originalUrl.includes("topics") ? "active" : ""}`
+            ) Chủ đề
+            a(
+                href=`${prefixAdmin}/songs` 
+                class=`sider-link ${originalUrl.includes("songs") ? "active" : ""}`
+            ) Bài hát 
+    
+    .sider-group 
+        h6.sider-heading 
+            i.fa-solid.fa-gauge
+            span Quản lí ca sĩ
+        .sider-item 
+            a(
+                href=`${prefixAdmin}/singers` 
+                class=`sider-link ${originalUrl.includes("singers") ? "active" : ""}`
+            ) Ca sĩ 
+
+    .sider-group 
+        h6.sider-heading 
+            i.fa-solid.fa-gauge
+            span Quản lí tài khoản admin  
+        .sider-item 
+            a(
+                href=`${prefixAdmin}/accounts` 
+                class=`sider-link ${originalUrl.includes("accounts") ? "active" : ""}`
+            ) Tài khoản admin
+            a(
+                href=`${prefixAdmin}/roles` 
+                class=`sider-link ${originalUrl.includes("roles") ? "active" : ""}`
+            ) Bảng quyền 
+            a(
+                href=`${prefixAdmin}/permissions` 
+                class=`sider-link ${originalUrl.includes("permissions") ? "active" : ""}`
+            ) Bảng phân quyền
+
+    .sider-group 
+        h6.sider-heading
+            i.fa-solid.fa-gauge
+            span Quản lí người dùng
+        .sider-item 
+            a(
+                href=`${prefixAdmin}/users` 
+                class=`sider-link ${originalUrl.includes("users") ? "active" : ""}`
+            ) Người dùng
+    
+    .sider-group 
+        h6.sider-heading 
+            i.fa-solid.fa-gauge
+            span Cài đặt chung
+        .sider-item 
+            a(
+                href=`${prefixAdmin}/interfaces/carousels` 
+                class=`sider-link ${originalUrl.includes("carousels") ? "active" : ""}`
+            ) Carousels
+            a(
+                href=`${prefixAdmin}/settings` 
+                class=`sider-link ${originalUrl.includes("settings") ? "active" : ""}`
+            ) Cài đặt chung

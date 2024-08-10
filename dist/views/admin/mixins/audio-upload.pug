@@ -1,0 +1,15 @@
+mixin audio-upload(id) 
+    .form-group 
+        span(class="fw-bold") Audio *
+        label(for=id class="fw-bold audio-upload-btn") 
+            .fa-solid.fa-plus.me-2 
+            span Tải audio lên
+        input(
+            type="file" 
+            id=id
+            name=id
+            style="display: none;" 
+            audio-upload-input
+            accept="audio/*"
+        ) 
+        p.error-msg

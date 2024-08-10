@@ -1,0 +1,15 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug
+include ../../mixins/item.pug
+
+block main 
+    .container 
+        +box-head(pageTitle)
+        if(songs.length > 0)
+            .row.my-4 
+                if(songs.length > 0)
+                    .owl-carousel#songs-carousel
+                        each song in songs
+                            +song-item(song)
+        else 
+            p.text-center(style="height: 160px;") Không tìm thấy kết quả phù hợp.

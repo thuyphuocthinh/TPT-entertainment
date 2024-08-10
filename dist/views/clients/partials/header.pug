@@ -1,0 +1,84 @@
+nav.navbar
+    .container-fluid.container-lg
+        #navbar
+            .navbar-left 
+                a(
+                    href='/' 
+                    class="fw-bold navbar-brand d-md-block d-none"
+                ) TPT-entertainment
+                
+                span.d-md-none.d-flex.align-items-center.gap-3
+                    button(
+                        class="navbar-toggler menu-icon" 
+                        type="button" 
+                        data-bs-toggle="offcanvas" 
+                        data-bs-target="#offcanvasNavbar" 
+                        aria-controls="offcanvasNavbar"
+                    )
+                        i.fa-solid.fa-bars
+                    a(
+                        href="/"
+                        class="fw-bold navbar-brand"
+                    ) TPT 
+
+                ul.navbar-list  
+                    li.navbar-item 
+                        a(href="/songs" class=`navbar-link ${originalUrl ? originalUrl.includes("songs")?"active":"" : ""}`) Bài hát
+                    li.navbar-item  
+                        a(href="/topics" class=`navbar-link ${originalUrl ? originalUrl.includes("topics")?"active":"" : ""}`) Chủ đề 
+                    li.navbar-item
+                        a(href="/singers" class=`navbar-link ${originalUrl ? originalUrl.includes("singers")?"active":"" : ""}`) Ca sĩ  
+                    li.navbar-item
+                        a(href="/ranking" class=`navbar-link ${originalUrl ? originalUrl.includes("ranking")?"active":"" : ""}`) Bảng xếp hạng  
+
+            #offcanvasNavbar.offcanvas.offcanvas-end(
+                tabindex='-1' 
+                aria-labelledby='offcanvasNavbarLabel'
+            )
+                .offcanvas-header
+                    h5#offcanvasNavbarLabel.offcanvas-title Menu
+                    button.btn-close(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+                .offcanvas-body
+                    ul.navbar-nav.justify-content-end.flex-grow-1.pe-3
+                        li.nav-item
+                            a.nav-link(href='/songs') Bài hát
+                        li.nav-item
+                            a.nav-link(href='/topics') Chủ đề
+                        li.nav-item
+                            a.nav-link(href='/singers') Ca sĩ
+                        li.nav-item
+                            a.nav-link(href='/ranking') Bảng xếp hạng
+
+
+            .navbar-right 
+                .search
+                    form(
+                        class="d-flex me-3"
+                        id="navbar-search"
+                        role="search"
+                        method="GET"
+                        action="/search/result"
+                        form-search
+                    )
+                        input.form-control.me-2(
+                            type='search' 
+                            name="keyword" 
+                            autocomplete="off"
+                            autosuggest="off"
+                            value=keyword 
+                            placeholder='Tìm kiếm tên bài hát' 
+                            aria-label='Search'
+                        )
+                    .search-suggest
+
+                if(user)    
+                    a(href=`/users/profile` class="me-4") 
+                        i.fa-solid.fa-user
+                        span.ms-2 #{user.fullName}
+                    a(href="/auth/logout" class="btn btn-secondary") Đăng xuất 
+                else
+                    a(href=`/auth/login`) Đăng nhập
+                    a(  
+                        href=`/auth/register` 
+                        class="ms-3"
+                    ).btn.btn-primary Đăng kí

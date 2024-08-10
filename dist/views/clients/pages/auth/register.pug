@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug 
+
+block main 
+
+    +alertError("3000")
+    +alertSuccess("3000")
+    
+    form(
+            action=`/auth/register`
+            method="POST"   
+            id="form-register"
+            style="max-width: 400px; width: 100%;"
+            class="mx-auto mt-5"
+        ) 
+            h4.text-center.mb-3 Đăng kí
+            .mb-1.row.form-group
+                label.col-12.col-form-label.fw-bold(for='fullName') Họ tên
+                .col-12
+                    input(class="form-control" type='fullName' value=email name="fullName" id="fullName" placeholder="Nhập họ tên")
+                p.error-msg 
+            .mb-1.row.form-group
+                label.col-12.col-form-label.fw-bold(for='email') Email
+                .col-12
+                    input(class="form-control" type='email' value=email name="email" id="email" placeholder="Nhập email")
+                p.error-msg 
+
+            .mb-1.row.form-group
+                label.col-12.col-form-label.fw-bold(for='password') Password
+                .col-12
+                    input(class="form-control" type='password' name="password" id="password" placeholder="Nhập password")
+                p.error-msg 
+
+            .mb-1.row.px-2
+                .col-12.col-form-label
+                button(type="submit" class="btn btn-primary" style="width: 100%;") Đăng kí
+    
+    script(src="/clients/js/validator.js") 

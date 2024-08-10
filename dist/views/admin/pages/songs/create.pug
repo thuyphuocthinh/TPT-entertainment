@@ -1,0 +1,92 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/image-upload.pug 
+include ../../mixins/audio-upload.pug 
+include ../../mixins/alert.pug
+
+block main
+        .container 
+            +box-head(pageTitle)
+            include ../../partials/require.pug
+
+            +alertSuccess(3000)
+
+            form(
+                action=`${prefixAdmin}/songs/create`
+                method="POST"
+                enctype="multipart/form-data"
+                id="form-create-song"
+            )
+                .row.my-3
+                    .col-md-4.col-12 
+                        .form-group     
+                            label(for="title" class="fw-bold") Tên *
+                            input(type="text" name="title" id="title" class="form-control") 
+                            p.error-msg
+
+                    .col-md-4.col-12  
+                        .form-group     
+                            label(for="topicId" class="fw-bold") Chủ đề *
+                            select(name="topicId" id="topicId" class="form-select")
+                                option(value="" disabled=true selected) -- Chọn chủ đề --   
+                                each topic in topics 
+                                    option(value=topic.id) #{topic.title} 
+                            p.error-msg
+
+                    .col-md-4.col-12  
+                        .form-group     
+                            label(for="singerId" class="fw-bold") Ca sĩ *
+                            select(name="singerId" id="singerId" class="form-select")
+                                option(value="" disabled=true selected) -- Chọn ca sĩ --   
+                                each singer in singers 
+                                    option(value=singer.id) #{singer.fullName} 
+                            p.error-msg
+                
+                .row.my-3
+                    .col-6 
+                        .row
+                            .col-md-6.col-12
+                                +image-upload("avatar")
+                            .col-md-6.col-12
+                                .preview-image
+                    .col-6 
+                        .row 
+                            .col-md-6.col-12    
+                                +audio-upload("audio")
+                            .col-md-6.col-12 
+                                .preview-audio    
+                .row.my-3  
+                    .col-12
+                        .form-group 
+                            label(class="fw-bold") Mô tả *
+                            textarea(name="description" id="description" class="textarea-mce")
+                            p.error-msg
+                    .col-12
+                        .form-group 
+                            label(class="fw-bold") Lyrics *
+                            textarea(name="lyrics" id="lyrics" class="textarea-mce")
+                            p.error-msg
+
+                .row.my-3 
+                    .col-md-8.col-12.d-flex.align-items-center.gap-4
+                        span(class="fw-bold p-0 m-0") Trạng thái hoạt động
+                        .form-check.form-check-inline.mb-0
+                            input.form-check-input(type='radio' id="active" name='status' value='active' checked)
+                            label.form-check-label(for='active') Hoạt động
+                        .form-check.form-check-inline.mb-0
+                            input.form-check-input(type='radio' id="inactive" name='status' value='inactive')
+                            label.form-check-label(for='inactive') Chưa hoạt động
+
+                .my-3 
+                    button(type="submit" class="btn btn-secondary" btn-create) Tạo mới
+
+        script(src="/admin/js/upload-image.js") 
+        script(src="/admin/js/upload-audio.js") 
+        script(type="application/javascript" src="/tinymce/tinymce.min.js")
+        script(src="/admin/js/my-tinymce-config.js") 
+        script(src="/admin/js/validator.js") 
+
+
+
+        
+

@@ -1,0 +1,35 @@
+mixin topic-item(topic)
+    a(href=`/topics/${topic.slug}` class="d-block") 
+        .item.topic-item 
+            .item-img 
+                img(src=topic.avatar, alt=topic.title, class="d-block")
+            .item-heading 
+                h6.mt-2 #{topic.title} 
+
+mixin song-item(song)
+    a(href=`/songs/detail/${song.slug}` class="d-block") 
+        .item.song-item 
+            .item-img 
+                img(src=song.avatar, alt=song.title, class="d-block", style="width: 100%;")
+            .item-info 
+                h6 #{song.title}
+                if(song.infoSinger)
+                    p=song.infoSinger.fullName
+
+mixin related-song-item(song)
+    a(href=`/songs/detail/${song.slug}` class="d-block related-song-link") 
+        .item.related-song-item
+            .item-img 
+                img(src=song.avatar, alt=song.title, class="d-block", style="width: 100%;")
+            .item-info 
+                h6 #{song.title}
+                if(song.infoSinger)
+                    p=song.infoSinger.fullName
+
+mixin singer-item(singer) 
+    a(href=`/singers/${singer.slug}` class="d-block" title=singer.fullName) 
+        .item.singer-item
+            .item-img 
+                img(src=singer.avatar, alt=singer.title, class="d-block", style="width: 100%;")
+            .item-heading 
+                h6.mt-2 #{singer.fullName} 
