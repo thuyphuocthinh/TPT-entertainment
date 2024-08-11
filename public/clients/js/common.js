@@ -98,7 +98,7 @@ if (formSearch) {
       const searchContainer = document.querySelector(".search");
       const searchSuggest = searchContainer.querySelector(".search-suggest");
       if (value) {
-        fetch(`http://localhost:5000/search/suggest?keyword=${value}`, {
+        fetch(`/search/suggest?keyword=${value}`, {
           method: "GET",
         })
           .then((resp) => resp.json())
